@@ -28,44 +28,6 @@ import (
 )
 
 const (
-	defaultConfiguration             string = ""
-	defaultDatabaseUrl               string = ""
-	defaultEnableAll                 bool   = false
-	defaultEnableSenzingRestApi      bool   = false
-	defaultEnableSwaggerUI           bool   = false
-	defaultEnableXterm               bool   = false
-	defaultEngineConfigurationJson   string = ""
-	defaultEngineLogLevel            int    = 0
-	defaultGrpcUrl                          = ""
-	defaultHttpPort                  int    = 8261
-	defaultLogLevel                  string = "INFO"
-	defaultObserverOrigin            string = "serve-http"
-	defaultObserverUrl               string = ""
-	defaultServerAddress             string = "0.0.0.0"
-	defaultXtermCommand              string = "/bin/bash"
-	defaultXtermConnectionErrorLimit int    = 10
-	defaultXtermKeepalivePingTimeout int    = 20
-	defaultXtermMaxBufferSizeBytes   int    = 512
-	// envarEnableAll                   string = "SENZING_TOOLS_ENABLE_ALL"
-	// envarEnableSenzingRestApi        string = "SENZING_TOOLS_ENABLE_SENZING_REST_API"
-	// envarEnableXterm                 string = "SENZING_TOOLS_ENABLE_XTERM"
-	// envarServerAddress               string = "SENZING_TOOLS_SERVER_ADDRESS"
-	// envarXtermAllowedHostnames       string = "SENZING_TOOLS_XTERM_ALLOWED_HOSTNAMES"
-	// envarXtermArguments              string = "SENZING_TOOLS_XTERM_ARGUMENTS"
-	// envarXtermCommand                string = "SENZING_TOOLS_XTERM_COMMAND"
-	// envarXtermConnectionErrorLimit   string = "SENZING_TOOLS_XTERM_CONNECTION_ERROR_LIMIT"
-	// envarXtermKeepalivePingTimeout   string = "SENZING_TOOLS_XTERM_KEEPALIVE_PING_TIMEOUT"
-	// envarXtermMaxBufferSizeBytes     string = "SENZING_TOOLS_XTERM_MAX_BUFFER_SIZE_BYTES"
-	// optionEnableAll                  string = "enable-all"
-	// optionEnableSenzingRestApi       string = "enable-senzing-rest-api"
-	// optionEnableXterm                string = "enable-xterm"
-	// optionServerAddress              string = "server-address"
-	// optionXtermAllowedHostnames      string = "xterm-allowed-hostnames"
-	// optionXtermArguments             string = "xterm-arguments"
-	// optionXtermCommand               string = "xterm-command"
-	// optionXtermConnectionErrorLimit  string = "xterm-connection-error-limit"
-	// optionXtermKeepalivePingTimeout  string = "xterm-keepalive-ping-timeout"
-	// optionXtermMaxBufferSizeBytes    string = "xterm-max-buffer-size-bytes"
 	Short string = "serve-http short description"
 	Use   string = "serve-http"
 	Long  string = `
@@ -73,11 +35,167 @@ serve-http long description.
 	`
 )
 
-var (
-	defaultEngineModuleName      string   = fmt.Sprintf("serve-http-%d", time.Now().Unix())
-	defaultXtermAllowedHostnames []string = getDefaultAllowedHostnames()
-	defaultXtermArguments        []string
-)
+// ----------------------------------------------------------------------------
+// Context variables
+// ----------------------------------------------------------------------------
+
+var ContextBools = []struct {
+	Dfault bool
+	Envar  string
+	Help   string
+	Option string
+}{
+	{
+		Dfault: false,
+		Envar:  envar.EnableSwaggerUi,
+		Help:   help.EnableSwaggerUi,
+		Option: option.EnableSwaggerUi,
+	},
+	{
+		Dfault: false,
+		Envar:  envar.EnableAll,
+		Help:   help.EnableAll,
+		Option: option.EnableAll,
+	},
+	{
+		Dfault: false,
+		Envar:  envar.EnableSenzingRestApi,
+		Help:   help.EnableSenzingRestApi,
+		Option: option.EnableSenzingRestApi,
+	},
+	{
+		Dfault: false,
+		Envar:  envar.EnableXterm,
+		Help:   help.EnableXterm,
+		Option: option.EnableXterm,
+	},
+}
+
+var ContextInts = []struct {
+	Dfault int
+	Envar  string
+	Help   string
+	Option string
+}{
+	{
+		Dfault: 0,
+		Envar:  envar.EngineLogLevel,
+		Help:   help.EngineLogLevel,
+		Option: option.EngineLogLevel,
+	},
+	{
+		Dfault: 8261,
+		Envar:  envar.HttpPort,
+		Help:   help.HttpPort,
+		Option: option.HttpPort,
+	},
+	{
+		Dfault: 10,
+		Envar:  envar.XtermConnectionErrorLimit,
+		Help:   help.XtermConnectionErrorLimit,
+		Option: option.XtermConnectionErrorLimit,
+	},
+	{
+		Dfault: 20,
+		Envar:  envar.XtermKeepalivePingTimeout,
+		Help:   help.XtermKeepalivePingTimeout,
+		Option: option.XtermKeepalivePingTimeout,
+	},
+	{
+		Dfault: 512,
+		Envar:  envar.XtermMaxBufferSizeBytes,
+		Help:   help.XtermMaxBufferSizeBytes,
+		Option: option.XtermMaxBufferSizeBytes,
+	},
+}
+
+var ContextStrings = []struct {
+	Dfault string
+	Envar  string
+	Help   string
+	Option string
+}{
+	{
+		Dfault: "",
+		Envar:  envar.Configuration,
+		Help:   help.Configuration,
+		Option: option.Configuration,
+	},
+	{
+		Dfault: "",
+		Envar:  envar.DatabaseUrl,
+		Help:   help.DatabaseUrl,
+		Option: option.DatabaseUrl,
+	},
+	{
+		Dfault: "",
+		Envar:  envar.EngineConfigurationJson,
+		Help:   help.EngineConfigurationJson,
+		Option: option.EngineConfigurationJson,
+	},
+	{
+		Dfault: fmt.Sprintf("serve-http-%d", time.Now().Unix()),
+		Envar:  envar.EngineModuleName,
+		Help:   help.EngineModuleName,
+		Option: option.EngineModuleName,
+	},
+	{
+		Dfault: "",
+		Envar:  envar.GrpcUrl,
+		Help:   help.GrpcUrl,
+		Option: option.GrpcUrl,
+	},
+	{
+		Dfault: "INFO",
+		Envar:  envar.LogLevel,
+		Help:   help.LogLevel,
+		Option: option.LogLevel,
+	},
+	{
+		Dfault: "serve-http",
+		Envar:  envar.ObserverOrigin,
+		Help:   help.ObserverOrigin,
+		Option: option.ObserverOrigin,
+	},
+	{
+		Dfault: "",
+		Envar:  envar.ObserverUrl,
+		Help:   help.ObserverUrl,
+		Option: option.ObserverUrl,
+	},
+	{
+		Dfault: "0.0.0.0",
+		Envar:  envar.ServerAddress,
+		Help:   help.ServerAddress,
+		Option: option.ServerAddress,
+	},
+	{
+		Dfault: "/bin/bash",
+		Envar:  envar.XtermCommand,
+		Help:   help.XtermCommand,
+		Option: option.XtermCommand,
+	},
+}
+
+var ContextStringSlices = []struct {
+	Dfault []string
+	Envar  string
+	Help   string
+	Option string
+}{
+	{
+		Dfault: getDefaultAllowedHostnames(),
+		Envar:  envar.XtermAllowedHostnames,
+		Help:   help.XtermAllowedHostnames,
+		Option: option.XtermAllowedHostnames,
+	},
+	{
+		Dfault: []string{},
+		Envar:  envar.XtermArguments,
+		Help:   help.XtermArguments,
+		Option: option.XtermArguments,
+	},
+}
 
 // ----------------------------------------------------------------------------
 // Private functions
@@ -85,27 +203,18 @@ var (
 
 // Since init() is always invoked, define command line parameters.
 func init() {
-	RootCmd.Flags().Bool(option.EnableSwaggerUi, defaultEnableSwaggerUI, fmt.Sprintf(help.EnableSwaggerUi, envar.EnableSwaggerUi))
-	RootCmd.Flags().Bool(option.EnableAll, defaultEnableAll, fmt.Sprintf(help.EnableAll, envar.EnableAll))
-	RootCmd.Flags().Bool(option.EnableSenzingRestApi, defaultEnableSenzingRestApi, fmt.Sprintf(help.EnableSenzingRestApi, envar.EnableSenzingRestApi))
-	RootCmd.Flags().Bool(option.EnableXterm, defaultEnableXterm, fmt.Sprintf(help.EnableXterm, envar.EnableXterm))
-	RootCmd.Flags().Int(option.EngineLogLevel, defaultEngineLogLevel, fmt.Sprintf(help.EngineLogLevel, envar.EngineLogLevel))
-	RootCmd.Flags().Int(option.HttpPort, defaultHttpPort, fmt.Sprintf(help.HttpPort, envar.HttpPort))
-	RootCmd.Flags().Int(option.XtermConnectionErrorLimit, defaultXtermConnectionErrorLimit, fmt.Sprintf(help.XtermConnectionErrorLimit, envar.XtermConnectionErrorLimit))
-	RootCmd.Flags().Int(option.XtermKeepalivePingTimeout, defaultXtermKeepalivePingTimeout, fmt.Sprintf(help.XtermKeepalivePingTimeout, envar.XtermKeepalivePingTimeout))
-	RootCmd.Flags().Int(option.XtermMaxBufferSizeBytes, defaultXtermMaxBufferSizeBytes, fmt.Sprintf(help.XtermMaxBufferSizeBytes, envar.XtermMaxBufferSizeBytes))
-	RootCmd.Flags().String(option.Configuration, defaultConfiguration, fmt.Sprintf(help.Configuration, envar.Configuration))
-	RootCmd.Flags().String(option.DatabaseUrl, defaultDatabaseUrl, fmt.Sprintf(help.DatabaseUrl, envar.DatabaseUrl))
-	RootCmd.Flags().String(option.EngineConfigurationJson, defaultEngineConfigurationJson, fmt.Sprintf(help.EngineConfigurationJson, envar.EngineConfigurationJson))
-	RootCmd.Flags().String(option.EngineModuleName, defaultEngineModuleName, fmt.Sprintf(help.EngineModuleName, envar.EngineModuleName))
-	RootCmd.Flags().String(option.GrpcUrl, defaultGrpcUrl, fmt.Sprintf(help.GrpcUrl, envar.GrpcUrl))
-	RootCmd.Flags().String(option.LogLevel, defaultLogLevel, fmt.Sprintf(help.LogLevel, envar.LogLevel))
-	RootCmd.Flags().String(option.ObserverOrigin, defaultObserverOrigin, fmt.Sprintf(help.ObserverOrigin, envar.ObserverOrigin))
-	RootCmd.Flags().String(option.ObserverUrl, defaultObserverUrl, fmt.Sprintf(help.ObserverUrl, envar.ObserverUrl))
-	RootCmd.Flags().String(option.ServerAddress, defaultServerAddress, fmt.Sprintf(help.ServerAddress, envar.ServerAddress))
-	RootCmd.Flags().String(option.XtermCommand, defaultXtermCommand, fmt.Sprintf(help.XtermCommand, envar.XtermCommand))
-	RootCmd.Flags().StringSlice(option.XtermAllowedHostnames, defaultXtermAllowedHostnames, fmt.Sprintf(help.XtermAllowedHostnames, envar.XtermAllowedHostnames))
-	RootCmd.Flags().StringSlice(option.XtermArguments, defaultXtermArguments, fmt.Sprintf(help.XtermArguments, envar.XtermArguments))
+	for _, contextBool := range ContextBools {
+		RootCmd.Flags().Bool(contextBool.Option, contextBool.Dfault, fmt.Sprintf(contextBool.Help, contextBool.Envar))
+	}
+	for _, contextInt := range ContextInts {
+		RootCmd.Flags().Int(contextInt.Option, contextInt.Dfault, fmt.Sprintf(contextInt.Help, contextInt.Envar))
+	}
+	for _, contextString := range ContextStrings {
+		RootCmd.Flags().String(contextString.Option, contextString.Dfault, fmt.Sprintf(contextString.Help, contextString.Envar))
+	}
+	for _, contextStringSlice := range ContextStringSlices {
+		RootCmd.Flags().StringSlice(contextStringSlice.Option, contextStringSlice.Dfault, fmt.Sprintf(contextStringSlice.Help, contextStringSlice.Envar))
+	}
 }
 
 // If a configuration file is present, load it.
@@ -153,15 +262,9 @@ func loadOptions(cobraCommand *cobra.Command) {
 
 	// Bools
 
-	boolOptions := map[string]bool{
-		option.EnableAll:            defaultEnableAll,
-		option.EnableSenzingRestApi: defaultEnableSenzingRestApi,
-		option.EnableSwaggerUi:      defaultEnableSwaggerUI,
-		option.EnableXterm:          defaultEnableXterm,
-	}
-	for optionKey, optionValue := range boolOptions {
-		viper.SetDefault(optionKey, optionValue)
-		err = viper.BindPFlag(optionKey, cobraCommand.Flags().Lookup(optionKey))
+	for _, contextVar := range ContextBools {
+		viper.SetDefault(contextVar.Option, contextVar.Dfault)
+		err = viper.BindPFlag(contextVar.Option, cobraCommand.Flags().Lookup(contextVar.Option))
 		if err != nil {
 			panic(err)
 		}
@@ -169,16 +272,9 @@ func loadOptions(cobraCommand *cobra.Command) {
 
 	// Ints
 
-	intOptions := map[string]int{
-		option.EngineLogLevel:            defaultEngineLogLevel,
-		option.HttpPort:                  defaultHttpPort,
-		option.XtermConnectionErrorLimit: defaultXtermConnectionErrorLimit,
-		option.XtermKeepalivePingTimeout: defaultXtermKeepalivePingTimeout,
-		option.XtermMaxBufferSizeBytes:   defaultXtermMaxBufferSizeBytes,
-	}
-	for optionKey, optionValue := range intOptions {
-		viper.SetDefault(optionKey, optionValue)
-		err = viper.BindPFlag(optionKey, cobraCommand.Flags().Lookup(optionKey))
+	for _, contextVar := range ContextInts {
+		viper.SetDefault(contextVar.Option, contextVar.Dfault)
+		err = viper.BindPFlag(contextVar.Option, cobraCommand.Flags().Lookup(contextVar.Option))
 		if err != nil {
 			panic(err)
 		}
@@ -186,21 +282,9 @@ func loadOptions(cobraCommand *cobra.Command) {
 
 	// Strings
 
-	stringOptions := map[string]string{
-		option.Configuration:           defaultConfiguration,
-		option.DatabaseUrl:             defaultDatabaseUrl,
-		option.EngineConfigurationJson: defaultEngineConfigurationJson,
-		option.EngineModuleName:        defaultEngineModuleName,
-		option.GrpcUrl:                 defaultGrpcUrl,
-		option.LogLevel:                defaultLogLevel,
-		option.ObserverOrigin:          defaultObserverOrigin,
-		option.ObserverUrl:             defaultObserverUrl,
-		option.ServerAddress:           defaultServerAddress,
-		option.XtermCommand:            defaultXtermCommand,
-	}
-	for optionKey, optionValue := range stringOptions {
-		viper.SetDefault(optionKey, optionValue)
-		err = viper.BindPFlag(optionKey, cobraCommand.Flags().Lookup(optionKey))
+	for _, contextVar := range ContextStrings {
+		viper.SetDefault(contextVar.Option, contextVar.Dfault)
+		err = viper.BindPFlag(contextVar.Option, cobraCommand.Flags().Lookup(contextVar.Option))
 		if err != nil {
 			panic(err)
 		}
@@ -208,18 +292,13 @@ func loadOptions(cobraCommand *cobra.Command) {
 
 	// StringSlice
 
-	stringSliceOptions := map[string][]string{
-		option.XtermAllowedHostnames: defaultXtermAllowedHostnames,
-		option.XtermArguments:        defaultXtermArguments,
-	}
-	for optionKey, optionValue := range stringSliceOptions {
-		viper.SetDefault(optionKey, optionValue)
-		err = viper.BindPFlag(optionKey, cobraCommand.Flags().Lookup(optionKey))
+	for _, contextVar := range ContextStringSlices {
+		viper.SetDefault(contextVar.Option, contextVar.Dfault)
+		err = viper.BindPFlag(contextVar.Option, cobraCommand.Flags().Lookup(contextVar.Option))
 		if err != nil {
 			panic(err)
 		}
 	}
-
 }
 
 // --- Networking -------------------------------------------------------------
