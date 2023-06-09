@@ -229,8 +229,8 @@ github.com/senzing/go-rest-api-service v0.0.1 h1:a4PDAIkPbJMCiRxU650tAl1mhTMjQzG
 github.com/senzing/go-rest-api-service v0.0.1/go.mod h1:v7J3ZNCA0OV8RjUQvVK+sa31yssBF1poKjBWofn4X0s=
 github.com/senzing/go-sdk-abstract-factory v0.3.0 h1:2QoumWfON/bu8zzVxkHG8fJ4IE6UvzQUeR3lVKxCngU=
 github.com/senzing/go-sdk-abstract-factory v0.3.0/go.mod h1:LpDv9ahsQ2pzXR3NOXZh4tujTPhPLNX+ro07fvHMr7E=
-github.com/senzing/senzing-tools v0.2.8 h1:987GLtzkgt0doJ+y9s9TQMMfYXRUF3tPPJiMNXbXDj0=
-github.com/senzing/senzing-tools v0.2.8/go.mod h1:Vt1ik8xpctPao4idGg3E5gbVfNgrYo1fBGGdnPk6xZI=
+github.com/senzing/senzing-tools v0.2.9-0.20230608211707-c68079e7b04c h1:fQ5a1MrHwpD2Joo9oGazaYxjxV8pftgUxEnKkrvjbJE=
+github.com/senzing/senzing-tools v0.2.9-0.20230608211707-c68079e7b04c/go.mod h1:sRgfvAPWhWikBBzdvRC2FDfUb2t0jaUQw2P6iX2QJTc=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
 github.com/sirupsen/logrus v1.9.3/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
 github.com/spf13/afero v1.9.5 h1:stMpOSZFs//0Lv29HduCmli3GUfpFoF3Y1Q/aXj/wVM=

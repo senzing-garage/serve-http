@@ -18,6 +18,7 @@ import (
 	"github.com/senzing/go-rest-api-service/senzingrestservice"
 	"github.com/senzing/senzing-tools/constant"
 	"github.com/senzing/senzing-tools/envar"
+	"github.com/senzing/senzing-tools/help"
 	"github.com/senzing/senzing-tools/helper"
 	"github.com/senzing/senzing-tools/option"
 	"github.com/senzing/serve-http/httpserver"
@@ -45,29 +46,29 @@ const (
 	defaultXtermConnectionErrorLimit int    = 10
 	defaultXtermKeepalivePingTimeout int    = 20
 	defaultXtermMaxBufferSizeBytes   int    = 512
-	envarEnableAll                   string = "SENZING_TOOLS_ENABLE_ALL"
-	envarEnableSenzingRestApi        string = "SENZING_TOOLS_ENABLE_SENZING_REST_API"
-	envarEnableXterm                 string = "SENZING_TOOLS_ENABLE_XTERM"
-	envarServerAddress               string = "SENZING_TOOLS_SERVER_ADDRESS"
-	envarXtermAllowedHostnames       string = "SENZING_TOOLS_XTERM_ALLOWED_HOSTNAMES"
-	envarXtermArguments              string = "SENZING_TOOLS_XTERM_ARGUMENTS"
-	envarXtermCommand                string = "SENZING_TOOLS_XTERM_COMMAND"
-	envarXtermConnectionErrorLimit   string = "SENZING_TOOLS_XTERM_CONNECTION_ERROR_LIMIT"
-	envarXtermKeepalivePingTimeout   string = "SENZING_TOOLS_XTERM_KEEPALIVE_PING_TIMEOUT"
-	envarXtermMaxBufferSizeBytes     string = "SENZING_TOOLS_XTERM_MAX_BUFFER_SIZE_BYTES"
-	optionEnableAll                  string = "enable-all"
-	optionEnableSenzingRestApi       string = "enable-senzing-rest-api"
-	optionEnableXterm                string = "enable-xterm"
-	optionServerAddress              string = "server-address"
-	optionXtermAllowedHostnames      string = "xterm-allowed-hostnames"
-	optionXtermArguments             string = "xterm-arguments"
-	optionXtermCommand               string = "xterm-command"
-	optionXtermConnectionErrorLimit  string = "xterm-connection-error-limit"
-	optionXtermKeepalivePingTimeout  string = "xterm-keepalive-ping-timeout"
-	optionXtermMaxBufferSizeBytes    string = "xterm-max-buffer-size-bytes"
-	Short                            string = "serve-http short description"
-	Use                              string = "serve-http"
-	Long                             string = `
+	// envarEnableAll                   string = "SENZING_TOOLS_ENABLE_ALL"
+	// envarEnableSenzingRestApi        string = "SENZING_TOOLS_ENABLE_SENZING_REST_API"
+	// envarEnableXterm                 string = "SENZING_TOOLS_ENABLE_XTERM"
+	// envarServerAddress               string = "SENZING_TOOLS_SERVER_ADDRESS"
+	// envarXtermAllowedHostnames       string = "SENZING_TOOLS_XTERM_ALLOWED_HOSTNAMES"
+	// envarXtermArguments              string = "SENZING_TOOLS_XTERM_ARGUMENTS"
+	// envarXtermCommand                string = "SENZING_TOOLS_XTERM_COMMAND"
+	// envarXtermConnectionErrorLimit   string = "SENZING_TOOLS_XTERM_CONNECTION_ERROR_LIMIT"
+	// envarXtermKeepalivePingTimeout   string = "SENZING_TOOLS_XTERM_KEEPALIVE_PING_TIMEOUT"
+	// envarXtermMaxBufferSizeBytes     string = "SENZING_TOOLS_XTERM_MAX_BUFFER_SIZE_BYTES"
+	// optionEnableAll                  string = "enable-all"
+	// optionEnableSenzingRestApi       string = "enable-senzing-rest-api"
+	// optionEnableXterm                string = "enable-xterm"
+	// optionServerAddress              string = "server-address"
+	// optionXtermAllowedHostnames      string = "xterm-allowed-hostnames"
+	// optionXtermArguments             string = "xterm-arguments"
+	// optionXtermCommand               string = "xterm-command"
+	// optionXtermConnectionErrorLimit  string = "xterm-connection-error-limit"
+	// optionXtermKeepalivePingTimeout  string = "xterm-keepalive-ping-timeout"
+	// optionXtermMaxBufferSizeBytes    string = "xterm-max-buffer-size-bytes"
+	Short string = "serve-http short description"
+	Use   string = "serve-http"
+	Long  string = `
 serve-http long description.
 	`
 )
@@ -84,27 +85,27 @@ var (
 
 // Since init() is always invoked, define command line parameters.
 func init() {
-	RootCmd.Flags().Bool(option.EnableSwaggerUi, defaultEnableSwaggerUI, fmt.Sprintf("Enable the Swagger UI service [%s]", envar.EnableSwaggerUi))
-	RootCmd.Flags().Bool(optionEnableAll, defaultEnableAll, fmt.Sprintf("Enable all services [%s]", envarEnableAll))
-	RootCmd.Flags().Bool(optionEnableSenzingRestApi, defaultEnableSenzingRestApi, fmt.Sprintf("Enable the Senzing REST API service [%s]", envarEnableSenzingRestApi))
-	RootCmd.Flags().Bool(optionEnableXterm, defaultEnableXterm, fmt.Sprintf("Enable the XTerm service [%s]", envarEnableXterm))
-	RootCmd.Flags().Int(option.EngineLogLevel, defaultEngineLogLevel, fmt.Sprintf("Log level for Senzing Engine [%s]", envar.EngineLogLevel))
-	RootCmd.Flags().Int(option.HttpPort, defaultHttpPort, fmt.Sprintf("Port to serve HTTP [%s]", envar.HttpPort))
-	RootCmd.Flags().Int(optionXtermConnectionErrorLimit, defaultXtermConnectionErrorLimit, fmt.Sprintf("Connection re-attempts before terminating [%s]", envarXtermConnectionErrorLimit))
-	RootCmd.Flags().Int(optionXtermKeepalivePingTimeout, defaultXtermKeepalivePingTimeout, fmt.Sprintf("Maximum allowable seconds between a ping message and its response [%s]", envarXtermKeepalivePingTimeout))
-	RootCmd.Flags().Int(optionXtermMaxBufferSizeBytes, defaultXtermMaxBufferSizeBytes, fmt.Sprintf("Maximum length of terminal input [%s]", envarXtermMaxBufferSizeBytes))
-	RootCmd.Flags().String(option.Configuration, defaultConfiguration, fmt.Sprintf("Path to configuration file [%s]", envar.Configuration))
-	RootCmd.Flags().String(option.DatabaseUrl, defaultDatabaseUrl, fmt.Sprintf("URL of database to initialize [%s]", envar.DatabaseUrl))
-	RootCmd.Flags().String(option.EngineConfigurationJson, defaultEngineConfigurationJson, fmt.Sprintf("JSON string sent to Senzing's init() function [%s]", envar.EngineConfigurationJson))
-	RootCmd.Flags().String(option.EngineModuleName, defaultEngineModuleName, fmt.Sprintf("Identifier given to the Senzing engine [%s]", envar.EngineModuleName))
-	RootCmd.Flags().String(option.GrpcUrl, defaultGrpcUrl, fmt.Sprintf("URL of Senzing gRPC service [%s]", envar.GrpcUrl))
-	RootCmd.Flags().String(option.LogLevel, defaultLogLevel, fmt.Sprintf("Log level [%s]", envar.LogLevel))
-	RootCmd.Flags().String(option.ObserverOrigin, defaultObserverOrigin, fmt.Sprintf("Identify this instance to the Observer [%s]", envar.ObserverOrigin))
-	RootCmd.Flags().String(option.ObserverUrl, defaultObserverUrl, fmt.Sprintf("URL of Observer [%s]", envar.ObserverUrl))
-	RootCmd.Flags().String(optionServerAddress, defaultServerAddress, fmt.Sprintf("IP interface server listens on [%s]", envarServerAddress))
-	RootCmd.Flags().String(optionXtermCommand, defaultXtermCommand, fmt.Sprintf("Path of shell command [%s]", envarXtermCommand))
-	RootCmd.Flags().StringSlice(optionXtermAllowedHostnames, defaultXtermAllowedHostnames, fmt.Sprintf("Comma-delimited list of hostnames permitted to connect to the websocket [%s]", envarXtermAllowedHostnames))
-	RootCmd.Flags().StringSlice(optionXtermArguments, defaultXtermArguments, fmt.Sprintf("Comma-delimited list of arguments passed to the terminal command prompt [%s]", envarXtermArguments))
+	RootCmd.Flags().Bool(option.EnableSwaggerUi, defaultEnableSwaggerUI, fmt.Sprintf(help.EnableSwaggerUi, envar.EnableSwaggerUi))
+	RootCmd.Flags().Bool(option.EnableAll, defaultEnableAll, fmt.Sprintf(help.EnableAll, envar.EnableAll))
+	RootCmd.Flags().Bool(option.EnableSenzingRestApi, defaultEnableSenzingRestApi, fmt.Sprintf(help.EnableSenzingRestApi, envar.EnableSenzingRestApi))
+	RootCmd.Flags().Bool(option.EnableXterm, defaultEnableXterm, fmt.Sprintf(help.EnableXterm, envar.EnableXterm))
+	RootCmd.Flags().Int(option.EngineLogLevel, defaultEngineLogLevel, fmt.Sprintf(help.EngineLogLevel, envar.EngineLogLevel))
+	RootCmd.Flags().Int(option.HttpPort, defaultHttpPort, fmt.Sprintf(help.HttpPort, envar.HttpPort))
+	RootCmd.Flags().Int(option.XtermConnectionErrorLimit, defaultXtermConnectionErrorLimit, fmt.Sprintf(help.XtermConnectionErrorLimit, envar.XtermConnectionErrorLimit))
+	RootCmd.Flags().Int(option.XtermKeepalivePingTimeout, defaultXtermKeepalivePingTimeout, fmt.Sprintf(help.XtermKeepalivePingTimeout, envar.XtermKeepalivePingTimeout))
+	RootCmd.Flags().Int(option.XtermMaxBufferSizeBytes, defaultXtermMaxBufferSizeBytes, fmt.Sprintf(help.XtermMaxBufferSizeBytes, envar.XtermMaxBufferSizeBytes))
+	RootCmd.Flags().String(option.Configuration, defaultConfiguration, fmt.Sprintf(help.Configuration, envar.Configuration))
+	RootCmd.Flags().String(option.DatabaseUrl, defaultDatabaseUrl, fmt.Sprintf(help.DatabaseUrl, envar.DatabaseUrl))
+	RootCmd.Flags().String(option.EngineConfigurationJson, defaultEngineConfigurationJson, fmt.Sprintf(help.EngineConfigurationJson, envar.EngineConfigurationJson))
+	RootCmd.Flags().String(option.EngineModuleName, defaultEngineModuleName, fmt.Sprintf(help.EngineModuleName, envar.EngineModuleName))
+	RootCmd.Flags().String(option.GrpcUrl, defaultGrpcUrl, fmt.Sprintf(help.GrpcUrl, envar.GrpcUrl))
+	RootCmd.Flags().String(option.LogLevel, defaultLogLevel, fmt.Sprintf(help.LogLevel, envar.LogLevel))
+	RootCmd.Flags().String(option.ObserverOrigin, defaultObserverOrigin, fmt.Sprintf(help.ObserverOrigin, envar.ObserverOrigin))
+	RootCmd.Flags().String(option.ObserverUrl, defaultObserverUrl, fmt.Sprintf(help.ObserverUrl, envar.ObserverUrl))
+	RootCmd.Flags().String(option.ServerAddress, defaultServerAddress, fmt.Sprintf(help.ServerAddress, envar.ServerAddress))
+	RootCmd.Flags().String(option.XtermCommand, defaultXtermCommand, fmt.Sprintf(help.XtermCommand, envar.XtermCommand))
+	RootCmd.Flags().StringSlice(option.XtermAllowedHostnames, defaultXtermAllowedHostnames, fmt.Sprintf(help.XtermAllowedHostnames, envar.XtermAllowedHostnames))
+	RootCmd.Flags().StringSlice(option.XtermArguments, defaultXtermArguments, fmt.Sprintf(help.XtermArguments, envar.XtermArguments))
 }
 
 // If a configuration file is present, load it.
@@ -153,10 +154,10 @@ func loadOptions(cobraCommand *cobra.Command) {
 	// Bools
 
 	boolOptions := map[string]bool{
-		option.EnableSwaggerUi:     defaultEnableSwaggerUI,
-		optionEnableAll:            defaultEnableAll,
-		optionEnableSenzingRestApi: defaultEnableSenzingRestApi,
-		optionEnableXterm:          defaultEnableXterm,
+		option.EnableAll:            defaultEnableAll,
+		option.EnableSenzingRestApi: defaultEnableSenzingRestApi,
+		option.EnableSwaggerUi:      defaultEnableSwaggerUI,
+		option.EnableXterm:          defaultEnableXterm,
 	}
 	for optionKey, optionValue := range boolOptions {
 		viper.SetDefault(optionKey, optionValue)
@@ -169,11 +170,11 @@ func loadOptions(cobraCommand *cobra.Command) {
 	// Ints
 
 	intOptions := map[string]int{
-		option.EngineLogLevel:           defaultEngineLogLevel,
-		option.HttpPort:                 defaultHttpPort,
-		optionXtermConnectionErrorLimit: defaultXtermConnectionErrorLimit,
-		optionXtermKeepalivePingTimeout: defaultXtermKeepalivePingTimeout,
-		optionXtermMaxBufferSizeBytes:   defaultXtermMaxBufferSizeBytes,
+		option.EngineLogLevel:            defaultEngineLogLevel,
+		option.HttpPort:                  defaultHttpPort,
+		option.XtermConnectionErrorLimit: defaultXtermConnectionErrorLimit,
+		option.XtermKeepalivePingTimeout: defaultXtermKeepalivePingTimeout,
+		option.XtermMaxBufferSizeBytes:   defaultXtermMaxBufferSizeBytes,
 	}
 	for optionKey, optionValue := range intOptions {
 		viper.SetDefault(optionKey, optionValue)
@@ -194,8 +195,8 @@ func loadOptions(cobraCommand *cobra.Command) {
 		option.LogLevel:                defaultLogLevel,
 		option.ObserverOrigin:          defaultObserverOrigin,
 		option.ObserverUrl:             defaultObserverUrl,
-		optionServerAddress:            defaultServerAddress,
-		optionXtermCommand:             defaultXtermCommand,
+		option.ServerAddress:           defaultServerAddress,
+		option.XtermCommand:            defaultXtermCommand,
 	}
 	for optionKey, optionValue := range stringOptions {
 		viper.SetDefault(optionKey, optionValue)
@@ -208,8 +209,8 @@ func loadOptions(cobraCommand *cobra.Command) {
 	// StringSlice
 
 	stringSliceOptions := map[string][]string{
-		optionXtermAllowedHostnames: defaultXtermAllowedHostnames,
-		optionXtermArguments:        defaultXtermArguments,
+		option.XtermAllowedHostnames: defaultXtermAllowedHostnames,
+		option.XtermArguments:        defaultXtermArguments,
 	}
 	for optionKey, optionValue := range stringSliceOptions {
 		viper.SetDefault(optionKey, optionValue)
@@ -302,10 +303,10 @@ func RunE(_ *cobra.Command, _ []string) error {
 
 	httpServer := &httpserver.HttpServerImpl{
 		ApiUrlRoutePrefix:              "api",
-		EnableAll:                      viper.GetBool(optionEnableAll),
-		EnableSenzingRestAPI:           viper.GetBool(optionEnableSenzingRestApi),
+		EnableAll:                      viper.GetBool(option.EnableAll),
+		EnableSenzingRestAPI:           viper.GetBool(option.EnableSenzingRestApi),
 		EnableSwaggerUI:                viper.GetBool(option.EnableSwaggerUi),
-		EnableXterm:                    viper.GetBool(optionEnableXterm),
+		EnableXterm:                    viper.GetBool(option.EnableXterm),
 		GrpcDialOptions:                grpcDialOptions,
 		GrpcTarget:                     grpcTarget,
 		LogLevelName:                   viper.GetString(option.LogLevel),
@@ -316,15 +317,15 @@ func RunE(_ *cobra.Command, _ []string) error {
 		SenzingEngineConfigurationJson: senzingEngineConfigurationJson,
 		SenzingModuleName:              viper.GetString(option.EngineModuleName),
 		SenzingVerboseLogging:          viper.GetInt(option.EngineLogLevel),
-		ServerAddress:                  viper.GetString(optionServerAddress),
+		ServerAddress:                  viper.GetString(option.ServerAddress),
 		ServerPort:                     viper.GetInt(option.HttpPort),
 		SwaggerUrlRoutePrefix:          "swagger",
-		XtermAllowedHostnames:          viper.GetStringSlice(optionXtermAllowedHostnames),
-		XtermArguments:                 viper.GetStringSlice(optionXtermArguments),
-		XtermCommand:                   viper.GetString(optionXtermCommand),
-		XtermConnectionErrorLimit:      viper.GetInt(optionXtermConnectionErrorLimit),
-		XtermKeepalivePingTimeout:      viper.GetInt(optionXtermKeepalivePingTimeout),
-		XtermMaxBufferSizeBytes:        viper.GetInt(optionXtermMaxBufferSizeBytes),
+		XtermAllowedHostnames:          viper.GetStringSlice(option.XtermAllowedHostnames),
+		XtermArguments:                 viper.GetStringSlice(option.XtermArguments),
+		XtermCommand:                   viper.GetString(option.XtermCommand),
+		XtermConnectionErrorLimit:      viper.GetInt(option.XtermConnectionErrorLimit),
+		XtermKeepalivePingTimeout:      viper.GetInt(option.XtermKeepalivePingTimeout),
+		XtermMaxBufferSizeBytes:        viper.GetInt(option.XtermMaxBufferSizeBytes),
 		XtermUrlRoutePrefix:            "xterm",
 	}
 	err = httpServer.Serve(ctx)
