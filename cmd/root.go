@@ -4,22 +4,19 @@ package cmd
 
 import (
 	"context"
-	_ "embed"
 	"fmt"
 	"log"
 	"net"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/senzing/go-common/g2engineconfigurationjson"
 	"github.com/senzing/go-grpcing/grpcurl"
 	"github.com/senzing/go-observing/observer"
 	"github.com/senzing/go-rest-api-service/senzingrestservice"
-	"github.com/senzing/senzing-tools/constant"
+	"github.com/senzing/senzing-tools/cmdhelper"
 	"github.com/senzing/senzing-tools/envar"
 	"github.com/senzing/senzing-tools/help"
-	"github.com/senzing/senzing-tools/helper"
 	"github.com/senzing/senzing-tools/option"
 	"github.com/senzing/serve-http/httpserver"
 	"github.com/spf13/cobra"
@@ -39,162 +36,149 @@ serve-http long description.
 // Context variables
 // ----------------------------------------------------------------------------
 
-var ContextBools = []struct {
-	Dfault bool
-	Envar  string
-	Help   string
-	Option string
-}{
+var ContextBools = []cmdhelper.ContextBool{
 	{
-		Dfault: false,
-		Envar:  envar.EnableSwaggerUi,
-		Help:   help.EnableSwaggerUi,
-		Option: option.EnableSwaggerUi,
+		Default: cmdhelper.OsLookupEnvBool(envar.EnableSwaggerUi, false),
+		Envar:   envar.EnableSwaggerUi,
+		Help:    help.EnableSwaggerUi,
+		Option:  option.EnableSwaggerUi,
 	},
 	{
-		Dfault: false,
-		Envar:  envar.EnableAll,
-		Help:   help.EnableAll,
-		Option: option.EnableAll,
+		Default: cmdhelper.OsLookupEnvBool(envar.EnableAll, false),
+		Envar:   envar.EnableAll,
+		Help:    help.EnableAll,
+		Option:  option.EnableAll,
 	},
 	{
-		Dfault: false,
-		Envar:  envar.EnableSenzingRestApi,
-		Help:   help.EnableSenzingRestApi,
-		Option: option.EnableSenzingRestApi,
+		Default: cmdhelper.OsLookupEnvBool(envar.EnableSenzingRestApi, false),
+		Envar:   envar.EnableSenzingRestApi,
+		Help:    help.EnableSenzingRestApi,
+		Option:  option.EnableSenzingRestApi,
 	},
 	{
-		Dfault: false,
-		Envar:  envar.EnableXterm,
-		Help:   help.EnableXterm,
-		Option: option.EnableXterm,
+		Default: cmdhelper.OsLookupEnvBool(envar.EnableXterm, false),
+		Envar:   envar.EnableXterm,
+		Help:    help.EnableXterm,
+		Option:  option.EnableXterm,
 	},
 }
 
-var ContextInts = []struct {
-	Dfault int
-	Envar  string
-	Help   string
-	Option string
-}{
+var ContextInts = []cmdhelper.ContextInt{
 	{
-		Dfault: 0,
-		Envar:  envar.EngineLogLevel,
-		Help:   help.EngineLogLevel,
-		Option: option.EngineLogLevel,
+		Default: cmdhelper.OsLookupEnvInt(envar.Configuration, 0),
+		Envar:   envar.EngineLogLevel,
+		Help:    help.EngineLogLevel,
+		Option:  option.EngineLogLevel,
 	},
 	{
-		Dfault: 8261,
-		Envar:  envar.HttpPort,
-		Help:   help.HttpPort,
-		Option: option.HttpPort,
+		Default: cmdhelper.OsLookupEnvInt(envar.HttpPort, 8261),
+		Envar:   envar.HttpPort,
+		Help:    help.HttpPort,
+		Option:  option.HttpPort,
 	},
 	{
-		Dfault: 10,
-		Envar:  envar.XtermConnectionErrorLimit,
-		Help:   help.XtermConnectionErrorLimit,
-		Option: option.XtermConnectionErrorLimit,
+		Default: cmdhelper.OsLookupEnvInt(envar.XtermConnectionErrorLimit, 10),
+		Envar:   envar.XtermConnectionErrorLimit,
+		Help:    help.XtermConnectionErrorLimit,
+		Option:  option.XtermConnectionErrorLimit,
 	},
 	{
-		Dfault: 20,
-		Envar:  envar.XtermKeepalivePingTimeout,
-		Help:   help.XtermKeepalivePingTimeout,
-		Option: option.XtermKeepalivePingTimeout,
+		Default: cmdhelper.OsLookupEnvInt(envar.XtermKeepalivePingTimeout, 20),
+		Envar:   envar.XtermKeepalivePingTimeout,
+		Help:    help.XtermKeepalivePingTimeout,
+		Option:  option.XtermKeepalivePingTimeout,
 	},
 	{
-		Dfault: 512,
-		Envar:  envar.XtermMaxBufferSizeBytes,
-		Help:   help.XtermMaxBufferSizeBytes,
-		Option: option.XtermMaxBufferSizeBytes,
+		Default: cmdhelper.OsLookupEnvInt(envar.XtermMaxBufferSizeBytes, 512),
+		Envar:   envar.XtermMaxBufferSizeBytes,
+		Help:    help.XtermMaxBufferSizeBytes,
+		Option:  option.XtermMaxBufferSizeBytes,
 	},
 }
 
-var ContextStrings = []struct {
-	Dfault string
-	Envar  string
-	Help   string
-	Option string
-}{
+var ContextStrings = []cmdhelper.ContextString{
 	{
-		Dfault: "",
-		Envar:  envar.Configuration,
-		Help:   help.Configuration,
-		Option: option.Configuration,
+		Default: cmdhelper.OsLookupEnvString(envar.Configuration, ""),
+		Envar:   envar.Configuration,
+		Help:    help.Configuration,
+		Option:  option.Configuration,
 	},
 	{
-		Dfault: "",
-		Envar:  envar.DatabaseUrl,
-		Help:   help.DatabaseUrl,
-		Option: option.DatabaseUrl,
+		Default: cmdhelper.OsLookupEnvString(envar.DatabaseUrl, ""),
+		Envar:   envar.DatabaseUrl,
+		Help:    help.DatabaseUrl,
+		Option:  option.DatabaseUrl,
 	},
 	{
-		Dfault: "",
-		Envar:  envar.EngineConfigurationJson,
-		Help:   help.EngineConfigurationJson,
-		Option: option.EngineConfigurationJson,
+		Default: cmdhelper.OsLookupEnvString(envar.EngineConfigurationJson, ""),
+		Envar:   envar.EngineConfigurationJson,
+		Help:    help.EngineConfigurationJson,
+		Option:  option.EngineConfigurationJson,
 	},
 	{
-		Dfault: fmt.Sprintf("serve-http-%d", time.Now().Unix()),
-		Envar:  envar.EngineModuleName,
-		Help:   help.EngineModuleName,
-		Option: option.EngineModuleName,
+		Default: fmt.Sprintf("serve-http-%d", time.Now().Unix()),
+		Envar:   envar.EngineModuleName,
+		Help:    help.EngineModuleName,
+		Option:  option.EngineModuleName,
 	},
 	{
-		Dfault: "",
-		Envar:  envar.GrpcUrl,
-		Help:   help.GrpcUrl,
-		Option: option.GrpcUrl,
+		Default: cmdhelper.OsLookupEnvString(envar.GrpcUrl, ""),
+		Envar:   envar.GrpcUrl,
+		Help:    help.GrpcUrl,
+		Option:  option.GrpcUrl,
 	},
 	{
-		Dfault: "INFO",
-		Envar:  envar.LogLevel,
-		Help:   help.LogLevel,
-		Option: option.LogLevel,
+		Default: cmdhelper.OsLookupEnvString(envar.LogLevel, "INFO"),
+		Envar:   envar.LogLevel,
+		Help:    help.LogLevel,
+		Option:  option.LogLevel,
 	},
 	{
-		Dfault: "serve-http",
-		Envar:  envar.ObserverOrigin,
-		Help:   help.ObserverOrigin,
-		Option: option.ObserverOrigin,
+		Default: cmdhelper.OsLookupEnvString(envar.ObserverOrigin, "serve-http"),
+		Envar:   envar.ObserverOrigin,
+		Help:    help.ObserverOrigin,
+		Option:  option.ObserverOrigin,
 	},
 	{
-		Dfault: "",
-		Envar:  envar.ObserverUrl,
-		Help:   help.ObserverUrl,
-		Option: option.ObserverUrl,
+		Default: cmdhelper.OsLookupEnvString(envar.ObserverUrl, ""),
+		Envar:   envar.ObserverUrl,
+		Help:    help.ObserverUrl,
+		Option:  option.ObserverUrl,
 	},
 	{
-		Dfault: "0.0.0.0",
-		Envar:  envar.ServerAddress,
-		Help:   help.ServerAddress,
-		Option: option.ServerAddress,
+		Default: cmdhelper.OsLookupEnvString(envar.ServerAddress, "0.0.0.0"),
+		Envar:   envar.ServerAddress,
+		Help:    help.ServerAddress,
+		Option:  option.ServerAddress,
 	},
 	{
-		Dfault: "/bin/bash",
-		Envar:  envar.XtermCommand,
-		Help:   help.XtermCommand,
-		Option: option.XtermCommand,
+		Default: cmdhelper.OsLookupEnvString(envar.ObserverUrl, "/bin/bash"),
+		Envar:   envar.XtermCommand,
+		Help:    help.XtermCommand,
+		Option:  option.XtermCommand,
 	},
 }
 
-var ContextStringSlices = []struct {
-	Dfault []string
-	Envar  string
-	Help   string
-	Option string
-}{
+var ContextStringSlices = []cmdhelper.ContextStringSlice{
 	{
-		Dfault: getDefaultAllowedHostnames(),
-		Envar:  envar.XtermAllowedHostnames,
-		Help:   help.XtermAllowedHostnames,
-		Option: option.XtermAllowedHostnames,
+		Default: getDefaultAllowedHostnames(),
+		Envar:   envar.XtermAllowedHostnames,
+		Help:    help.XtermAllowedHostnames,
+		Option:  option.XtermAllowedHostnames,
 	},
 	{
-		Dfault: []string{},
-		Envar:  envar.XtermArguments,
-		Help:   help.XtermArguments,
-		Option: option.XtermArguments,
+		Default: []string{},
+		Envar:   envar.XtermArguments,
+		Help:    help.XtermArguments,
+		Option:  option.XtermArguments,
 	},
+}
+
+var ContextVariables = &cmdhelper.ContextVariables{
+	Bools:        ContextBools,
+	Ints:         ContextInts,
+	Strings:      ContextStrings,
+	StringSlices: ContextStringSlices,
 }
 
 // ----------------------------------------------------------------------------
@@ -203,102 +187,7 @@ var ContextStringSlices = []struct {
 
 // Since init() is always invoked, define command line parameters.
 func init() {
-	for _, contextBool := range ContextBools {
-		RootCmd.Flags().Bool(contextBool.Option, contextBool.Dfault, fmt.Sprintf(contextBool.Help, contextBool.Envar))
-	}
-	for _, contextInt := range ContextInts {
-		RootCmd.Flags().Int(contextInt.Option, contextInt.Dfault, fmt.Sprintf(contextInt.Help, contextInt.Envar))
-	}
-	for _, contextString := range ContextStrings {
-		RootCmd.Flags().String(contextString.Option, contextString.Dfault, fmt.Sprintf(contextString.Help, contextString.Envar))
-	}
-	for _, contextStringSlice := range ContextStringSlices {
-		RootCmd.Flags().StringSlice(contextStringSlice.Option, contextStringSlice.Dfault, fmt.Sprintf(contextStringSlice.Help, contextStringSlice.Envar))
-	}
-}
-
-// If a configuration file is present, load it.
-func loadConfigurationFile(cobraCommand *cobra.Command) {
-	configuration := ""
-	configFlag := cobraCommand.Flags().Lookup(option.Configuration)
-	if configFlag != nil {
-		configuration = configFlag.Value.String()
-	}
-	if configuration != "" { // Use configuration file specified as a command line option.
-		viper.SetConfigFile(configuration)
-	} else { // Search for a configuration file.
-
-		// Determine home directory.
-
-		home, err := os.UserHomeDir()
-		cobra.CheckErr(err)
-
-		// Specify configuration file name.
-
-		viper.SetConfigName("serve-http")
-		viper.SetConfigType("yaml")
-
-		// Define search path order.
-
-		viper.AddConfigPath(home + "/.senzing-tools")
-		viper.AddConfigPath(home)
-		viper.AddConfigPath("/etc/senzing-tools")
-	}
-
-	// If a config file is found, read it in.
-
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Fprintln(os.Stderr, "Applying configuration file:", viper.ConfigFileUsed())
-	}
-}
-
-// Configure Viper with user-specified options.
-func loadOptions(cobraCommand *cobra.Command) {
-	var err error = nil
-	viper.AutomaticEnv()
-	replacer := strings.NewReplacer("-", "_")
-	viper.SetEnvKeyReplacer(replacer)
-	viper.SetEnvPrefix(constant.SetEnvPrefix)
-
-	// Bools
-
-	for _, contextVar := range ContextBools {
-		viper.SetDefault(contextVar.Option, contextVar.Dfault)
-		err = viper.BindPFlag(contextVar.Option, cobraCommand.Flags().Lookup(contextVar.Option))
-		if err != nil {
-			panic(err)
-		}
-	}
-
-	// Ints
-
-	for _, contextVar := range ContextInts {
-		viper.SetDefault(contextVar.Option, contextVar.Dfault)
-		err = viper.BindPFlag(contextVar.Option, cobraCommand.Flags().Lookup(contextVar.Option))
-		if err != nil {
-			panic(err)
-		}
-	}
-
-	// Strings
-
-	for _, contextVar := range ContextStrings {
-		viper.SetDefault(contextVar.Option, contextVar.Dfault)
-		err = viper.BindPFlag(contextVar.Option, cobraCommand.Flags().Lookup(contextVar.Option))
-		if err != nil {
-			panic(err)
-		}
-	}
-
-	// StringSlice
-
-	for _, contextVar := range ContextStringSlices {
-		viper.SetDefault(contextVar.Option, contextVar.Dfault)
-		err = viper.BindPFlag(contextVar.Option, cobraCommand.Flags().Lookup(contextVar.Option))
-		if err != nil {
-			panic(err)
-		}
-	}
+	cmdhelper.Init(RootCmd, *ContextVariables)
 }
 
 // --- Networking -------------------------------------------------------------
@@ -341,9 +230,7 @@ func Execute() {
 
 // Used in construction of cobra.Command
 func PreRun(cobraCommand *cobra.Command, args []string) {
-	loadConfigurationFile(cobraCommand)
-	loadOptions(cobraCommand)
-	cobraCommand.SetVersionTemplate(constant.VersionTemplate)
+	cmdhelper.PreRun(cobraCommand, args, Use, *ContextVariables)
 }
 
 // Used in construction of cobra.Command
@@ -413,7 +300,7 @@ func RunE(_ *cobra.Command, _ []string) error {
 
 // Used in construction of cobra.Command
 func Version() string {
-	return helper.MakeVersion(githubVersion, githubIteration)
+	return cmdhelper.Version(githubVersion, githubIteration)
 }
 
 // ----------------------------------------------------------------------------
