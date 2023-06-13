@@ -9,7 +9,7 @@ require (
 	github.com/senzing/go-grpcing v0.1.0
 	github.com/senzing/go-observing v0.2.5
 	github.com/senzing/go-rest-api-service v0.0.1
-	github.com/senzing/senzing-tools v0.2.9-0.20230608211707-c68079e7b04c
+	github.com/senzing/senzing-tools v0.2.9-0.20230613173043-18f1bd4cafdb
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
 	google.golang.org/grpc v1.55.0
@@ -67,7 +67,7 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.24.0 // indirect
 	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1 // indirect
-	golang.org/x/net v0.10.0 // indirect
+	golang.org/x/net v0.11.0 // indirect
 	golang.org/x/sync v0.2.0 // indirect
 	golang.org/x/sys v0.9.0 // indirect
 	golang.org/x/text v0.10.0 // indirect
@@ -76,9 +76,4 @@ require (
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-)
-
-replace (
-	github.com/senzing/g2-sdk-go v0.6.5-0.20230605212343-7516a3ae79ba => /home/senzing/senzing.git/g2-sdk-go
-	github.com/senzing/senzing-tools v0.2.9-0.20230608211707-c68079e7b04c => /home/senzing/senzing.git/senzing-tools
 )

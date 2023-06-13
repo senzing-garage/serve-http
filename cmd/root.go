@@ -25,10 +25,13 @@ import (
 )
 
 const (
-	Short string = "serve-http short description"
+	Short string = "HTTP server supporting various services"
 	Use   string = "serve-http"
 	Long  string = `
-serve-http long description.
+An HTTP server supporting the following services:
+  - Senzing API server
+  - Swagger UI
+  - Xterm
 	`
 )
 
