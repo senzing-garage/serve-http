@@ -29,9 +29,9 @@ const (
 	Use   string = "serve-http"
 	Long  string = `
 An HTTP server supporting the following services:
-  - Senzing API server
-  - Swagger UI
-  - Xterm
+	- Senzing API server
+	- Swagger UI
+	- Xterm
 	`
 )
 
