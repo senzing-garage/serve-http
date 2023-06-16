@@ -78,6 +78,7 @@ senzing-tools serve-http [flags]
 
     ```
 
+1. Visit [localhost:8261](http://localhost:8261)
 1. Run `senzing-tools serve-http --help` or see [Parameters](#parameters) for additional parameters.
 
 ### Using environment variables
@@ -92,6 +93,7 @@ senzing-tools serve-http [flags]
     senzing-tools serve-http
     ```
 
+1. Visit [localhost:8261](http://localhost:8261)
 1. Run `senzing-tools serve-http --help` or see [Parameters](#parameters) for additional parameters.
 
 ### Using Docker
@@ -113,6 +115,7 @@ This usage shows how to initialze a database with a Docker container.
 
     ```
 
+1. Visit [localhost:8261](http://localhost:8261)
 1. See [Parameters](#parameters) for additional parameters.
 
 ### Parameters
