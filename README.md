@@ -38,7 +38,7 @@ senzing-tools serve-http --enable-all
 
 ```
 
-Then visit []()
+Then visit [localhost:8261](http://localhost:8261)
 
 ## Install
 
