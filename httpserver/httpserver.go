@@ -10,6 +10,7 @@ import (
 	"io/fs"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/docktermj/cloudshell/xtermservice"
@@ -238,6 +239,10 @@ func (httpServer *HttpServerImpl) Serve(ctx context.Context) error {
 	// Enable Xterm.
 
 	if httpServer.EnableAll || httpServer.EnableXterm {
+		err := os.Setenv("SENZING_ENGINE_CONFIGURATION_JSON", httpServer.SenzingEngineConfigurationJson)
+		if err != nil {
+			panic(err)
+		}
 		xtermMux := httpServer.getXtermMux(ctx)
 		rootMux.Handle(fmt.Sprintf("/%s/", httpServer.XtermUrlRoutePrefix), http.StripPrefix("/xterm", xtermMux))
 		userMessage = fmt.Sprintf("%sServing XTerm at            http://localhost:%d/%s\n", userMessage, httpServer.ServerPort, httpServer.XtermUrlRoutePrefix)
