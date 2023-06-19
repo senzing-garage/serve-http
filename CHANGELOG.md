@@ -12,4 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added to 0.0.1
 
-- Skeleton project
+- Swagger UI
+- Support for following Senzing HTTP REST URIs:
+  - GET /heartbeat
+  - GET /specifications/open-api
+  - GET /license
+  - GET /version
+- XTerm
