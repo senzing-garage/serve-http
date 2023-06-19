@@ -108,7 +108,7 @@ This usage shows how to initialze a database with a Docker container.
         --env SENZING_TOOLS_DATABASE_URL=postgresql://username:password@postgres.example.com:5432/G2 \
         --env SENZING_TOOLS_ENABLE_ALL=true \
         --interactive \
-        --publish 8258:8258 \
+        --publish 8261:8261 \
         --rm \
         --tty \
         senzing/senzing-tools serve-http
