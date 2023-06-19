@@ -23,6 +23,11 @@ ARG BUILD_VERSION=0.0.0
 ARG BUILD_ITERATION=0
 ARG GO_PACKAGE_NAME="unknown"
 
+# Copy remote files from DockerHub.
+
+COPY --from=senzing/senzingapi-runtime:3.5.2  "/opt/senzing/g2/lib/"   "/opt/senzing/g2/lib/"
+COPY --from=senzing/senzingapi-runtime:3.5.2  "/opt/senzing/g2/sdk/c/" "/opt/senzing/g2/sdk/c/"
+
 # Copy local files from the Git repository.
 
 COPY ./rootfs /

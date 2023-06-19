@@ -31,6 +31,19 @@ Since the Senzing library is a prerequisite, it must be installed first.
 1. Using the environment variables values just set, follow steps in
    [clone-repository](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/clone-repository.md) to install the Git repository.
 
+## Run
+
+1. Run without a build.
+   Example:
+
+     ```console
+     cd ${GIT_REPOSITORY_DIR}
+     make run
+
+     ```
+
+1. Open a web browser at [localhost:8261](http://localhost:8261).
+
 ## Build
 
 1. Build the binaries.
@@ -113,8 +126,11 @@ the reference can be found by clicking on the following badge at the top of the 
 
     ```console
     docker run \
+      --env SENZING_TOOLS_DATABASE_URL=sqlite3://na:na@/tmp/sqlite/G2C.db \
+      --publish 8261:8261 \
       --rm \
-      senzing/serve-http
+      --volume /tmp/sqlite:/tmp/sqlite \
+      senzing/serve-http --enable-all
 
     ```
 

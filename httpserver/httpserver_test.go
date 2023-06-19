@@ -1,12 +1,9 @@
-package examplepackage
+package httpserver
 
 import (
-	"context"
 	"fmt"
 	"os"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 // ----------------------------------------------------------------------------
@@ -41,26 +38,14 @@ func teardown() error {
 // Test interface functions
 // ----------------------------------------------------------------------------
 
-func TestExamplePackageImpl_SaySomething(test *testing.T) {
-	ctx := context.TODO()
-	testObject := &ExamplePackageImpl{
-		Something: "I'm here",
-	}
-	err := testObject.SaySomething(ctx)
-	assert.Nil(test, err)
+func TestHttpServerImpl_Serve(test *testing.T) {
+
 }
 
 // ----------------------------------------------------------------------------
 // Examples for godoc documentation
 // ----------------------------------------------------------------------------
 
-func ExampleExamplePackageImpl_SaySomething() {
-	// For more information, visit https://github.com/Senzing/serve-http/blob/main/examplepackage/examplepackage_test.go
-	ctx := context.TODO()
-	examplePackage := &ExamplePackageImpl{
-		Something: "I'm here",
-	}
-	examplePackage.SaySomething(ctx)
-	//Output:
-	//examplePackage: I'm here
+func ExampleHttpServerImpl_Serve() {
+
 }

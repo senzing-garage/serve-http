@@ -8,22 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Thing 5
-- Thing 4
+## [0.0.1] - 2023-06-19
 
-## [1.0.1] - yyyy-mm-dd
+### Added to 0.0.1
 
-### Added to 1.0.1
-
-- Thing 3
-
-### Fixed in 1.0.1
-
-- Thing 2
-
-## [1.0.0] - yyyy-mm-dd
-
-### Added to 1.0.0
-
-- Thing 2
-- Thing 1
+- Swagger UI
+- Support for following Senzing HTTP REST URIs:
+  - GET /heartbeat
+  - GET /specifications/open-api
+  - GET /license
+  - GET /version
+- XTerm

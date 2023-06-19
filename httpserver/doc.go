@@ -37,4 +37,4 @@ Examples of use can be seen in the examplepackage_test.go files.
 		}
 	}
 */
-package examplepackage
+package httpserver
