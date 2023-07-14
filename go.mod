@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/docktermj/cloudshell v0.2.0
 	github.com/flowchartsman/swaggerui v0.0.0-20221017034628-909ed4f3701b
-	github.com/senzing/go-common v0.2.0
+	github.com/senzing/go-common v0.2.2
 	github.com/senzing/go-grpcing v0.1.1
 	github.com/senzing/go-observing v0.2.6
 	github.com/senzing/go-rest-api-service v0.0.2
@@ -51,8 +51,8 @@ require (
 	github.com/senzing/g2-sdk-go-base v0.2.1 // indirect
 	github.com/senzing/g2-sdk-go-grpc v0.3.1 // indirect
 	github.com/senzing/g2-sdk-proto/go v0.0.0-20230608182106-25c8cdc02e3c // indirect
-	github.com/senzing/go-logging v1.3.0 // indirect
-	github.com/senzing/go-messaging v0.2.2 // indirect
+	github.com/senzing/go-logging v1.3.1 // indirect
+	github.com/senzing/go-messaging v1.3.1 // indirect
 	github.com/senzing/go-sdk-abstract-factory v0.3.1 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spf13/afero v1.9.5 // indirect
@@ -66,7 +66,7 @@ require (
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.24.0 // indirect
-	golang.org/x/exp v0.0.0-20230711153332-06a737ee72cb // indirect
+	golang.org/x/exp v0.0.0-20230713183714-613f0c0eb8a1 // indirect
 	golang.org/x/net v0.11.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect
 	golang.org/x/sys v0.9.0 // indirect
