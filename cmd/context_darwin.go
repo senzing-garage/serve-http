@@ -36,3 +36,5 @@ var ContextStringsForOsArch = []cmdhelper.ContextString{
 		Option:  "support-path",
 	},
 }
+
+var ContextStringSlicesForOsArch = []cmdhelper.ContextStringSlice{}
