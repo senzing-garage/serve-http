@@ -178,10 +178,9 @@ var ContextStringSlices = []cmdhelper.ContextStringSlice{
 }
 
 var ContextVariables = &cmdhelper.ContextVariables{
-	Bools:        ContextBools,
-	Ints:         ContextInts,
-	Strings:      ContextStrings,
-	StringSlices: ContextStringSlices,
+	Bools:   append(ContextBools, ContextBoolsForOsArch...),
+	Ints:    append(ContextInts, ContextIntsForForOsArch...),
+	Strings: append(ContextStrings, ContextStringsForOsArch...),
 }
 
 // ----------------------------------------------------------------------------
@@ -245,10 +244,22 @@ func RunE(_ *cobra.Command, _ []string) error {
 
 	senzingEngineConfigurationJson := viper.GetString(option.EngineConfigurationJson)
 	if len(senzingEngineConfigurationJson) == 0 {
-		senzingEngineConfigurationJson, err = g2engineconfigurationjson.BuildSimpleSystemConfigurationJson(viper.GetString(option.DatabaseUrl))
+		options := map[string]string{
+			"configPath":          viper.GetString(option.ConfigPath),
+			"databaseUrl":         viper.GetString(option.DatabaseUrl),
+			"licenseStringBase64": viper.GetString(option.LicenseStringBase64),
+			"resourcePath":        viper.GetString(option.ResourcePath),
+			"senzingDirectory":    viper.GetString(option.SenzingDirectory),
+			"supportPath":         viper.GetString(option.SupportPath),
+		}
+		senzingEngineConfigurationJson, err = g2engineconfigurationjson.BuildSimpleSystemConfigurationJsonUsingMap(options)
 		if err != nil {
 			return err
 		}
+	}
+	err = g2engineconfigurationjson.VerifySenzingEngineConfigurationJson(ctx, senzingEngineConfigurationJson)
+	if err != nil {
+		return err
 	}
 
 	// Determine if gRPC is being used.
@@ -297,8 +308,7 @@ func RunE(_ *cobra.Command, _ []string) error {
 		XtermMaxBufferSizeBytes:        viper.GetInt(option.XtermMaxBufferSizeBytes),
 		XtermUrlRoutePrefix:            "xterm",
 	}
-	err = httpServer.Serve(ctx)
-	return err
+	return httpServer.Serve(ctx)
 }
 
 // Used in construction of cobra.Command
