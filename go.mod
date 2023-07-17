@@ -8,7 +8,7 @@ require (
 	github.com/senzing/go-common v0.2.2
 	github.com/senzing/go-grpcing v0.1.1
 	github.com/senzing/go-observing v0.2.6
-	github.com/senzing/go-rest-api-service v0.0.3-0.20230713235044-71a67bb7561d
+	github.com/senzing/go-rest-api-service v0.0.3
 	github.com/senzing/senzing-tools v0.3.1-0.20230713235126-9b84c4e632b4
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
