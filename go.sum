@@ -227,8 +227,8 @@ github.com/senzing/go-messaging v1.3.1 h1:mTzpX3gKdxvk2e+nOvtRxGQuZdUfsMBf2aTpaG
 github.com/senzing/go-messaging v1.3.1/go.mod h1:yGfaDeXGPNuCEfqdmEjUcN5kHVgTDnBdq6rTHpFOpVk=
 github.com/senzing/go-observing v0.2.6 h1:7qY/W7wMvvMApIJEsmsNbbgduvNsz+UjNc00UlhyqiA=
 github.com/senzing/go-observing v0.2.6/go.mod h1:JnoKy/J/OPcn2ea5kChWpHysnEUD+IqHHwoAVdpzvXU=
-github.com/senzing/go-rest-api-service v0.0.3-0.20230713235044-71a67bb7561d h1:J9HOPD0uDNUBkNUz3U+hsQWLHlyUTtyJqdgkSHc5m0o=
-github.com/senzing/go-rest-api-service v0.0.3-0.20230713235044-71a67bb7561d/go.mod h1:73jSwhnhkLZ+641IqZkKphTM7rHAkodZjPOO+elq8Lc=
+github.com/senzing/go-rest-api-service v0.0.3 h1:oKC9GkHc/ymler7A6ajOGGWno2akjQj1I2zHHVS/AE8=
+github.com/senzing/go-rest-api-service v0.0.3/go.mod h1:73jSwhnhkLZ+641IqZkKphTM7rHAkodZjPOO+elq8Lc=
 github.com/senzing/go-sdk-abstract-factory v0.3.1 h1:aA+BxY6Q+zLAW3MMJ++W9qJ6D7dfQrYQQbLa42SPgFc=
 github.com/senzing/go-sdk-abstract-factory v0.3.1/go.mod h1:Xm+UU4JGVHvWvmXylrj04YwQG6tc1nHj2L+f3rGyARk=
 github.com/senzing/senzing-tools v0.3.1-0.20230713235126-9b84c4e632b4 h1:72VCPdnmggI0Rhh3PnB0lZhzUcC2DQo/3yFwZ/cE0Rc=
