@@ -5,11 +5,11 @@ go 1.20
 require (
 	github.com/docktermj/cloudshell v0.2.0
 	github.com/flowchartsman/swaggerui v0.0.0-20221017034628-909ed4f3701b
-	github.com/senzing/go-common v0.2.4
+	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
+	github.com/senzing/go-cmdhelping v0.1.1
 	github.com/senzing/go-grpcing v0.1.1
 	github.com/senzing/go-observing v0.2.6
 	github.com/senzing/go-rest-api-service v0.0.3
-	github.com/senzing/senzing-tools v0.3.1-0.20230713235126-9b84c4e632b4
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
 	google.golang.org/grpc v1.56.2
@@ -52,6 +52,7 @@ require (
 	github.com/senzing/g2-sdk-go-grpc v0.3.1 // indirect
 	github.com/senzing/g2-sdk-json-type-definition v0.1.1 // indirect
 	github.com/senzing/g2-sdk-proto/go v0.0.0-20230608182106-25c8cdc02e3c // indirect
+	github.com/senzing/go-common v0.2.4 // indirect
 	github.com/senzing/go-logging v1.3.1 // indirect
 	github.com/senzing/go-messaging v1.3.1 // indirect
 	github.com/senzing/go-sdk-abstract-factory v0.3.1 // indirect

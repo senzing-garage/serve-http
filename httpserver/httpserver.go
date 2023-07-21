@@ -15,6 +15,7 @@ import (
 
 	"github.com/docktermj/cloudshell/xtermservice"
 	"github.com/flowchartsman/swaggerui"
+	"github.com/pkg/browser"
 	"github.com/senzing/go-observing/observer"
 	"github.com/senzing/go-rest-api-service/senzingrestapi"
 	"github.com/senzing/go-rest-api-service/senzingrestservice"
@@ -46,6 +47,7 @@ type HttpServerImpl struct {
 	ServerOptions                  []senzingrestapi.ServerOption
 	ServerPort                     int
 	SwaggerUrlRoutePrefix          string // FIXME: Only works with "swagger"
+	TtyOnly                        bool
 	XtermAllowedHostnames          []string
 	XtermArguments                 []string
 	XtermCommand                   string
@@ -271,5 +273,12 @@ func (httpServer *HttpServerImpl) Serve(ctx context.Context) error {
 		Addr:              listenOnAddress,
 		Handler:           rootMux,
 	}
+
+	// Start a web browser.  Unless disabled.
+
+	if !httpServer.TtyOnly {
+		_ = browser.OpenURL(fmt.Sprintf("http://localhost:%d", httpServer.ServerPort))
+	}
+
 	return server.ListenAndServe()
 }
