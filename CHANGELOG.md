@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.3] - 2023-07-26
+
+### Changed in 0.0.3
+
+- Update dependencies
+  - github.com/senzing/go-cmdhelping v0.1.2
+  - github.com/senzing/go-rest-api-service v0.0.4
+  - google.golang.org/grpc v1.57.0
+
 ## [0.0.2] - 2023-07-21
 
 ### Added in 0.0.2
