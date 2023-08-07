@@ -8,7 +8,7 @@ require (
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
 	github.com/senzing/go-cmdhelping v0.1.4
 	github.com/senzing/go-grpcing v0.1.2
-	github.com/senzing/go-observing v0.2.6
+	github.com/senzing/go-observing v0.2.7
 	github.com/senzing/go-rest-api-service v0.0.4
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
