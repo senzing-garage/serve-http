@@ -65,7 +65,7 @@ LABEL Name="senzing/serve-http" \
 
 # Copy files from prior stage.
 
-COPY --from=go_builder "/output/linux-amd64/template-go" "/app/template-go"
+COPY --from=go_builder "/output/linux-amd64/serve-http" "/app/serve-http"
 
 # Runtime environment variables.
 
