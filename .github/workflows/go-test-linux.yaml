@@ -41,4 +41,5 @@ jobs:
       - run: sudo cp /opt/senzing/g2/resources/templates/stb.config          /etc/opt/senzing
       - run: mkdir /tmp/sqlite
       - run: touch /tmp/sqlite/G2C.db
-      - run: go test -v -p 1 ./...
+      - name: Run go test
+        run: go test -v -p 1 ./...
