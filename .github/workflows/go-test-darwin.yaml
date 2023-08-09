@@ -33,9 +33,7 @@ jobs:
         run: hdiutil attach /tmp/senzingapi.dmg
       - name: Copy SenzingApi files
         run: sudo mkdir -p /opt/senzing/    && sudo cp -R /Volumes/SenzingAPI/senzing/g2 /opt/senzing
-      - name: Copy /etc files
-        run: sudo mkdir -p /etc/opt/senzing && sudo cp testdata/senzing-license/g2.lic /etc/opt/senzing
-      - name: Copy test database fies
-        run: mkdir /tmp/sqlite && cp testdata/sqlite/G2C.db /tmp/sqlite/G2C.db
+      - run: mkdir /tmp/sqlite
+      - run: touch /tmp/sqlite/G2C.db
       - name: Run go test
         run: go test -exec /Users/runner/work/serve-http/serve-http/bin/macos_exec_dyld.sh -v -p 1 ./...
