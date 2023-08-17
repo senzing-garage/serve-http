@@ -6,7 +6,7 @@ require (
 	github.com/docktermj/cloudshell v0.2.0
 	github.com/flowchartsman/swaggerui v0.0.0-20221017034628-909ed4f3701b
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
-	github.com/senzing/go-cmdhelping v0.1.5
+	github.com/senzing/go-cmdhelping v0.1.6
 	github.com/senzing/go-grpcing v0.1.2
 	github.com/senzing/go-observing v0.2.7
 	github.com/senzing/go-rest-api-service v0.0.5
