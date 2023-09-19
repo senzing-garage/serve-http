@@ -12,7 +12,7 @@ require (
 	github.com/senzing/go-rest-api-service v0.0.6
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
-	google.golang.org/grpc v1.57.0
+	google.golang.org/grpc v1.58.1
 )
 
 require (
