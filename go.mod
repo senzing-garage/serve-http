@@ -11,7 +11,7 @@ require (
 	github.com/senzing/go-observing v0.2.7
 	github.com/senzing/go-rest-api-service v0.0.6
 	github.com/spf13/cobra v1.7.0
-	github.com/spf13/viper v1.16.0
+	github.com/spf13/viper v1.17.0
 	google.golang.org/grpc v1.58.2
 )
 
@@ -46,6 +46,8 @@ require (
 	github.com/prometheus/common v0.44.0 // indirect
 	github.com/prometheus/procfs v0.12.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
+	github.com/sagikazarmark/locafero v0.3.0 // indirect
+	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
 	github.com/senzing/g2-sdk-go v0.7.0 // indirect
 	github.com/senzing/g2-sdk-go-base v0.3.0 // indirect
@@ -57,9 +59,9 @@ require (
 	github.com/senzing/go-messaging v1.3.2 // indirect
 	github.com/senzing/go-sdk-abstract-factory v0.4.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
+	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.10.0 // indirect
 	github.com/spf13/cast v1.5.1 // indirect
-	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	go.opentelemetry.io/otel v1.19.0 // indirect
