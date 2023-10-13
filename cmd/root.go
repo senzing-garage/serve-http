@@ -158,7 +158,7 @@ func RunE(_ *cobra.Command, _ []string) error {
 		ReadHeaderTimeout:              60 * time.Second,
 		SenzingEngineConfigurationJson: senzingEngineConfigurationJson,
 		SenzingModuleName:              viper.GetString(option.EngineModuleName.Arg),
-		SenzingVerboseLogging:          viper.GetInt(option.EngineLogLevel.Arg),
+		SenzingVerboseLogging:          viper.GetInt64(option.EngineLogLevel.Arg),
 		ServerAddress:                  viper.GetString(option.ServerAddress.Arg),
 		ServerPort:                     viper.GetInt(option.HttpPort.Arg),
 		SwaggerUrlRoutePrefix:          "swagger",
