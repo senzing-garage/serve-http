@@ -7,7 +7,7 @@ require (
 	github.com/flowchartsman/swaggerui v0.0.0-20221017034628-909ed4f3701b
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
 	github.com/senzing/go-cmdhelping v0.1.8
-	github.com/senzing/go-grpcing v0.1.2
+	github.com/senzing/go-grpcing v0.1.3
 	github.com/senzing/go-observing v0.2.8
 	github.com/senzing/go-rest-api-service v0.0.7-0.20231013193535-e4813fecc20e
 	github.com/spf13/cobra v1.7.0
