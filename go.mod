@@ -6,7 +6,7 @@ require (
 	github.com/docktermj/cloudshell v0.2.0
 	github.com/flowchartsman/swaggerui v0.0.0-20221017034628-909ed4f3701b
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
-	github.com/senzing/go-cmdhelping v0.1.8
+	github.com/senzing/go-cmdhelping v0.1.9
 	github.com/senzing/go-grpcing v0.1.3
 	github.com/senzing/go-observing v0.2.8
 	github.com/senzing/go-rest-api-service v0.0.7-0.20231013193535-e4813fecc20e
@@ -54,9 +54,9 @@ require (
 	github.com/senzing/g2-sdk-go-grpc v0.4.2 // indirect
 	github.com/senzing/g2-sdk-json-type-definition v0.1.1 // indirect
 	github.com/senzing/g2-sdk-proto/go v0.0.0-20231013142630-30a869751ff0 // indirect
-	github.com/senzing/go-common v0.3.0 // indirect
-	github.com/senzing/go-logging v1.3.2 // indirect
-	github.com/senzing/go-messaging v1.3.2 // indirect
+	github.com/senzing/go-common v0.3.1 // indirect
+	github.com/senzing/go-logging v1.3.3 // indirect
+	github.com/senzing/go-messaging v1.3.3 // indirect
 	github.com/senzing/go-sdk-abstract-factory v0.4.1 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
