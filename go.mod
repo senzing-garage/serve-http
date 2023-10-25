@@ -9,7 +9,7 @@ require (
 	github.com/senzing/go-cmdhelping v0.1.9
 	github.com/senzing/go-grpcing v0.1.3
 	github.com/senzing/go-observing v0.2.8
-	github.com/senzing/go-rest-api-service v0.0.7-0.20231013193535-e4813fecc20e
+	github.com/senzing/go-rest-api-service v0.1.0
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.17.0
 	google.golang.org/grpc v1.59.0
@@ -22,7 +22,7 @@ require (
 	github.com/creack/pty v1.1.18 // indirect
 	github.com/dlclark/regexp2 v1.10.0 // indirect
 	github.com/fatih/color v1.15.0 // indirect
-	github.com/fsnotify/fsnotify v1.6.0 // indirect
+	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-faster/errors v0.6.1 // indirect
 	github.com/go-faster/jx v1.1.0 // indirect
@@ -36,28 +36,28 @@ require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.19 // indirect
-	github.com/matttproud/golang_protobuf_extensions v1.0.4 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/matttproud/golang_protobuf_extensions/v2 v2.0.0 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/ogen-go/ogen v0.76.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
 	github.com/prometheus/client_golang v1.17.0 // indirect
 	github.com/prometheus/client_model v0.5.0 // indirect
-	github.com/prometheus/common v0.44.0 // indirect
+	github.com/prometheus/common v0.45.0 // indirect
 	github.com/prometheus/procfs v0.12.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sagikazarmark/locafero v0.3.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
-	github.com/senzing/g2-sdk-go v0.7.3 // indirect
-	github.com/senzing/g2-sdk-go-base v0.3.1 // indirect
-	github.com/senzing/g2-sdk-go-grpc v0.4.2 // indirect
+	github.com/senzing/g2-sdk-go v0.7.4 // indirect
+	github.com/senzing/g2-sdk-go-base v0.3.2 // indirect
+	github.com/senzing/g2-sdk-go-grpc v0.4.3 // indirect
 	github.com/senzing/g2-sdk-json-type-definition v0.1.1 // indirect
-	github.com/senzing/g2-sdk-proto/go v0.0.0-20231013142630-30a869751ff0 // indirect
+	github.com/senzing/g2-sdk-proto/go v0.0.0-20231016131354-0d0fba649357 // indirect
 	github.com/senzing/go-common v0.3.1 // indirect
 	github.com/senzing/go-logging v1.3.3 // indirect
 	github.com/senzing/go-messaging v1.3.3 // indirect
-	github.com/senzing/go-sdk-abstract-factory v0.4.1 // indirect
+	github.com/senzing/go-sdk-abstract-factory v0.4.2 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.10.0 // indirect
@@ -74,7 +74,7 @@ require (
 	golang.org/x/sync v0.4.0 // indirect
 	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20231012201019-e917dd12ba7a // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20231016165738-49dd2c1f3d0b // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
