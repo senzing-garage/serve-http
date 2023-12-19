@@ -11,7 +11,7 @@ require (
 	github.com/senzing/go-observing v0.2.8
 	github.com/senzing/go-rest-api-service v0.1.1
 	github.com/spf13/cobra v1.8.0
-	github.com/spf13/viper v1.18.1
+	github.com/spf13/viper v1.18.2
 	google.golang.org/grpc v1.60.0
 )
 
