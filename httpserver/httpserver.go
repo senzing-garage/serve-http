@@ -16,9 +16,9 @@ import (
 	"github.com/docktermj/cloudshell/xtermservice"
 	"github.com/flowchartsman/swaggerui"
 	"github.com/pkg/browser"
-	"github.com/senzing/go-observing/observer"
-	"github.com/senzing/go-rest-api-service/senzingrestapi"
-	"github.com/senzing/go-rest-api-service/senzingrestservice"
+	"github.com/senzing-garage/go-observing/observer"
+	"github.com/senzing-garage/go-rest-api-service/senzingrestapi"
+	"github.com/senzing-garage/go-rest-api-service/senzingrestservice"
 	"google.golang.org/grpc"
 )
 

@@ -13,18 +13,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed in 0.1.2
 
 - Update dependencies
-  - github.com/senzing/go-rest-api-service v0.1.1
+  - github.com/senzing-garage/go-rest-api-service v0.1.1
 
 ## [0.1.1] - 2023-10-25
 
 ### Changed in 0.1.1
 
-- Refactor to [template-go](https://github.com/Senzing/template-go)
+- Refactor to [template-go](https://github.com/senzing-garage/template-go)
 - Update dependencies
-  - github.com/senzing/go-cmdhelping v0.1.9
-  - github.com/senzing/go-grpcing v0.1.3
-  - github.com/senzing/go-observing v0.2.8
-  - github.com/senzing/go-rest-api-service v0.1.0
+  - github.com/senzing-garage/go-cmdhelping v0.1.9
+  - github.com/senzing-garage/go-grpcing v0.1.3
+  - github.com/senzing-garage/go-observing v0.2.8
+  - github.com/senzing-garage/go-rest-api-service v0.1.0
   - github.com/spf13/viper v1.17.0
   - google.golang.org/grpc v1.59.0
 
@@ -49,18 +49,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Refactor to `template-go`
 - Update dependencies
-  - github.com/senzing/go-cmdhelping v0.1.5
-  - github.com/senzing/go-grpcing v0.1.2
-  - github.com/senzing/go-observing v0.2.7
-  - github.com/senzing/go-rest-api-service v0.0.5
+  - github.com/senzing-garage/go-cmdhelping v0.1.5
+  - github.com/senzing-garage/go-grpcing v0.1.2
+  - github.com/senzing-garage/go-observing v0.2.7
+  - github.com/senzing-garage/go-rest-api-service v0.0.5
 
 ## [0.0.3] - 2023-07-26
 
 ### Changed in 0.0.3
 
 - Update dependencies
-  - github.com/senzing/go-cmdhelping v0.1.2
-  - github.com/senzing/go-rest-api-service v0.0.4
+  - github.com/senzing-garage/go-cmdhelping v0.1.2
+  - github.com/senzing-garage/go-rest-api-service v0.0.4
   - google.golang.org/grpc v1.57.0
 
 ## [0.0.2] - 2023-07-21
@@ -73,9 +73,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update dependencies
   - github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
-  - github.com/senzing/go-cmdhelping v0.1.1
-  - github.com/senzing/go-common v0.2.4
-  - github.com/senzing/go-rest-api-service v0.0.3
+  - github.com/senzing-garage/go-cmdhelping v0.1.1
+  - github.com/senzing-garage/go-common v0.2.4
+  - github.com/senzing-garage/go-rest-api-service v0.0.3
   - google.golang.org/grpc v1.56.2
 
 ## [0.0.1] - 2023-06-19

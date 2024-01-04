@@ -5,7 +5,7 @@ package main
 import (
 	"log"
 
-	"github.com/senzing/serve-http/cmd"
+	"github.com/senzing-garage/serve-http/cmd"
 )
 
 func main() {
