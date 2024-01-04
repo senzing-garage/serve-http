@@ -1,18 +1,22 @@
-# Makefile extensions for linux.
+# Makefile extensions for darwin.
 
 # -----------------------------------------------------------------------------
 # Variables
 # -----------------------------------------------------------------------------
 
-LD_LIBRARY_PATH ?= /opt/senzing/g2/lib
+SENZING_DIR ?= /opt/senzing/g2
+SENZING_TOOLS_SENZING_DIRECTORY ?= $(SENZING_DIR)
+
+LD_LIBRARY_PATH := $(SENZING_TOOLS_SENZING_DIRECTORY)/lib:$(SENZING_TOOLS_SENZING_DIRECTORY)/lib/macos
+DYLD_LIBRARY_PATH := $(LD_LIBRARY_PATH)
 SENZING_TOOLS_DATABASE_URL ?= sqlite3://na:na@/tmp/sqlite/G2C.db
 
 # -----------------------------------------------------------------------------
-# OS-ARCH specific targets
+# OS specific targets
 # -----------------------------------------------------------------------------
 
 .PHONY: build-osarch-specific
-build-osarch-specific: linux/amd64
+build-osarch-specific: darwin/amd64
 
 
 .PHONY: clean-osarch-specific
@@ -26,12 +30,12 @@ clean-osarch-specific:
 
 .PHONY: hello-world-osarch-specific
 hello-world-osarch-specific:
-	@echo "Hello World, from linux."
+	@echo "Hello World, from darwin."
 
 
 .PHONY: run-osarch-specific
 run-osarch-specific:
-	@go run main.go
+	@go run -exec macos_exec_dyld.sh main.go
 
 
 .PHONY: setup-osarch-specific
@@ -43,12 +47,12 @@ setup-osarch-specific:
 
 .PHONY: test-osarch-specific
 test-osarch-specific:
-	@go test -v -p 1 ./...
+	@go test -exec macos_exec_dyld.sh -v -p 1 ./...
 
 # -----------------------------------------------------------------------------
 # Makefile targets supported only by this platform.
 # -----------------------------------------------------------------------------
 
-.PHONY: only-linux
-only-linux:
-	@echo "Only linux has this Makefile target."
+.PHONY: only-darwin
+only-darwin:
+	@echo "Only darwin has this Makefile target."

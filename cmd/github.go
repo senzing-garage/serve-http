@@ -5,11 +5,11 @@
 package cmd
 
 var (
-	githubDate           string = "2023-11-02"
+	githubDate           string = "2024-01-04"
 	githubIteration      string = "0"
-	githubRef            string = "refs/tags/0.1.3"
-	githubRefName        string = "0.1.3"
+	githubRef            string = "refs/tags/0.2.0"
+	githubRefName        string = "0.2.0"
 	githubRepository     string = "Senzing/serve-http"
 	githubRepositoryName string = "serve-http"
-	githubVersion        string = "0.1.3"
+	githubVersion        string = "0.2.0"
 )
