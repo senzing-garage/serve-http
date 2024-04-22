@@ -6,7 +6,7 @@ require (
 	github.com/docktermj/cloudshell v0.2.0
 	github.com/flowchartsman/swaggerui v0.0.0-20221017034628-909ed4f3701b
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
-	github.com/senzing-garage/go-cmdhelping v0.2.0
+	github.com/senzing-garage/go-cmdhelping v0.2.1
 	github.com/senzing-garage/go-grpcing v0.2.0
 	github.com/senzing-garage/go-observing v0.3.1
 	github.com/senzing-garage/go-rest-api-service v0.9.1
@@ -38,7 +38,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/ogen-go/ogen v0.81.2 // indirect
-	github.com/pelletier/go-toml/v2 v2.1.1 // indirect
+	github.com/pelletier/go-toml/v2 v2.2.1 // indirect
 	github.com/prometheus/client_golang v1.18.0 // indirect
 	github.com/prometheus/client_model v0.5.0 // indirect
 	github.com/prometheus/common v0.46.0 // indirect
@@ -52,9 +52,9 @@ require (
 	github.com/senzing-garage/g2-sdk-go-grpc v0.6.0 // indirect
 	github.com/senzing-garage/g2-sdk-json-type-definition v0.2.0 // indirect
 	github.com/senzing-garage/g2-sdk-proto/go v0.0.0-20240126210601-d02d3beb81d4 // indirect
-	github.com/senzing-garage/go-common v0.4.0 // indirect
-	github.com/senzing-garage/go-logging v1.4.0 // indirect
-	github.com/senzing-garage/go-messaging v1.4.0 // indirect
+	github.com/senzing-garage/go-helpers v0.5.1 // indirect
+	github.com/senzing-garage/go-logging v1.4.1 // indirect
+	github.com/senzing-garage/go-messaging v1.4.1 // indirect
 	github.com/senzing-garage/go-sdk-abstract-factory v0.6.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
@@ -67,9 +67,9 @@ require (
 	go.opentelemetry.io/otel/trace v1.22.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.26.0 // indirect
-	golang.org/x/exp v0.0.0-20240119083558-1b970713d09a // indirect
+	golang.org/x/exp v0.0.0-20240416160154-fe59bbe5cc7f // indirect
 	golang.org/x/net v0.24.0 // indirect
-	golang.org/x/sync v0.6.0 // indirect
+	golang.org/x/sync v0.7.0 // indirect
 	golang.org/x/sys v0.19.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240415180920-8c6c420018be // indirect
