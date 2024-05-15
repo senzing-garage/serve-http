@@ -14,7 +14,7 @@ require (
 	github.com/senzing-garage/go-rest-api-service v0.9.3
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2
-	google.golang.org/grpc v1.63.2
+	google.golang.org/grpc v1.64.0
 )
 
 require (
