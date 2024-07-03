@@ -28,33 +28,33 @@ import (
 
 // HttpServerImpl is the default implementation of the HttpServer interface.
 type HttpServerImpl struct {
-	ApiUrlRoutePrefix              string // FIXME: Only works with "api"
-	EnableAll                      bool
-	EnableSenzingRestAPI           bool
-	EnableSwaggerUI                bool
-	EnableXterm                    bool
-	GrpcDialOptions                []grpc.DialOption
-	GrpcTarget                     string
-	LogLevelName                   string
-	ObserverOrigin                 string
-	Observers                      []observer.Observer
-	OpenApiSpecificationRest       []byte
-	ReadHeaderTimeout              time.Duration
-	SenzingEngineConfigurationJson string
-	SenzingModuleName              string
-	SenzingVerboseLogging          int64
-	ServerAddress                  string
-	ServerOptions                  []senzingrestapi.ServerOption
-	ServerPort                     int
-	SwaggerUrlRoutePrefix          string // FIXME: Only works with "swagger"
-	TtyOnly                        bool
-	XtermAllowedHostnames          []string
-	XtermArguments                 []string
-	XtermCommand                   string
-	XtermConnectionErrorLimit      int
-	XtermKeepalivePingTimeout      int
-	XtermMaxBufferSizeBytes        int
-	XtermUrlRoutePrefix            string // FIXME: Only works with "xterm"
+	ApiUrlRoutePrefix         string // FIXME: Only works with "api"
+	EnableAll                 bool
+	EnableSenzingRestAPI      bool
+	EnableSwaggerUI           bool
+	EnableXterm               bool
+	GrpcDialOptions           []grpc.DialOption
+	GrpcTarget                string
+	LogLevelName              string
+	ObserverOrigin            string
+	Observers                 []observer.Observer
+	OpenApiSpecificationRest  []byte
+	ReadHeaderTimeout         time.Duration
+	SenzingSettings           string
+	SenzingInstanceName       string
+	SenzingVerboseLogging     int64
+	ServerAddress             string
+	ServerOptions             []senzingrestapi.ServerOption
+	ServerPort                int
+	SwaggerUrlRoutePrefix     string // FIXME: Only works with "swagger"
+	TtyOnly                   bool
+	XtermAllowedHostnames     []string
+	XtermArguments            []string
+	XtermCommand              string
+	XtermConnectionErrorLimit int
+	XtermKeepalivePingTimeout int
+	XtermMaxBufferSizeBytes   int
+	XtermUrlRoutePrefix       string // FIXME: Only works with "xterm"
 }
 
 type TemplateVariables struct {
@@ -150,8 +150,8 @@ func (httpServer *HttpServerImpl) getSenzingApiMux(ctx context.Context) *senzing
 		LogLevelName:                   httpServer.LogLevelName,
 		ObserverOrigin:                 httpServer.ObserverOrigin,
 		Observers:                      httpServer.Observers,
-		SenzingEngineConfigurationJson: httpServer.SenzingEngineConfigurationJson,
-		SenzingModuleName:              httpServer.SenzingModuleName,
+		SenzingEngineConfigurationJson: httpServer.SenzingSettings,
+		SenzingModuleName:              httpServer.SenzingInstanceName,
 		SenzingVerboseLogging:          httpServer.SenzingVerboseLogging,
 		UrlRoutePrefix:                 httpServer.ApiUrlRoutePrefix,
 		OpenApiSpecificationSpec:       httpServer.OpenApiSpecificationRest,
@@ -241,7 +241,7 @@ func (httpServer *HttpServerImpl) Serve(ctx context.Context) error {
 	// Enable Xterm.
 
 	if httpServer.EnableAll || httpServer.EnableXterm {
-		err := os.Setenv("SENZING_ENGINE_CONFIGURATION_JSON", httpServer.SenzingEngineConfigurationJson)
+		err := os.Setenv("SENZING_ENGINE_CONFIGURATION_JSON", httpServer.SenzingSettings)
 		if err != nil {
 			panic(err)
 		}
