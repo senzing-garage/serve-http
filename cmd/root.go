@@ -10,8 +10,9 @@ import (
 	"time"
 
 	"github.com/senzing-garage/go-cmdhelping/cmdhelper"
-	"github.com/senzing-garage/go-cmdhelping/engineconfiguration"
 	"github.com/senzing-garage/go-cmdhelping/option"
+	"github.com/senzing-garage/go-cmdhelping/option/optiontype"
+	"github.com/senzing-garage/go-cmdhelping/settings"
 	"github.com/senzing-garage/go-grpcing/grpcurl"
 	"github.com/senzing-garage/go-observing/observer"
 	"github.com/senzing-garage/go-rest-api-service/senzingrestservice"
@@ -32,25 +33,34 @@ An HTTP server supporting the following services:
 	`
 )
 
+var avoidServe = option.ContextVariable{
+	Arg:     "avoid-serving",
+	Default: option.OsLookupEnvBool("SENZING_TOOLS_AVOID_SERVING", false),
+	Envar:   "SENZING_TOOLS_AVOID_SERVING",
+	Help:    "Avoid serving.  For testing only. [%s]",
+	Type:    optiontype.Bool,
+}
+
 // ----------------------------------------------------------------------------
 // Context variables
 // ----------------------------------------------------------------------------
 
 var ContextVariablesForMultiPlatform = []option.ContextVariable{
+	avoidServe,
 	option.Configuration,
-	option.DatabaseUrl,
+	option.DatabaseURL,
 	option.EnableAll,
-	option.EnableSenzingRestApi,
-	option.EnableSwaggerUi,
+	option.EnableSenzingRestAPI,
+	option.EnableSwaggerUI,
 	option.EnableXterm,
-	option.EngineConfigurationJson,
+	option.EngineConfigurationJSON,
 	option.EngineLogLevel,
 	option.EngineModuleName,
-	option.GrpcUrl,
-	option.HttpPort,
+	option.GrpcURL,
+	option.HTTPPort,
 	option.LogLevel,
 	option.ObserverOrigin,
-	option.ObserverUrl,
+	option.ObserverURL,
 	option.ServerAddress,
 	option.TtyOnly,
 	option.XtermAllowedHostnames.SetDefault(getDefaultAllowedHostnames()),
@@ -90,9 +100,9 @@ func getOutboundIP() net.IP {
 
 func getDefaultAllowedHostnames() []string {
 	result := []string{"localhost"}
-	outboundIpAddress := getOutboundIP().String()
-	if len(outboundIpAddress) > 0 {
-		result = append(result, outboundIpAddress)
+	outboundIPAddress := getOutboundIP().String()
+	if len(outboundIPAddress) > 0 {
+		result = append(result, outboundIPAddress)
 	}
 	return result
 }
@@ -117,21 +127,21 @@ func PreRun(cobraCommand *cobra.Command, args []string) {
 
 // Used in construction of cobra.Command
 func RunE(_ *cobra.Command, _ []string) error {
-	var err error = nil
+	var err error
 	ctx := context.Background()
 
-	senzingEngineConfigurationJson, err := engineconfiguration.BuildAndVerifySenzingEngineConfigurationJson(ctx, viper.GetViper())
+	senzingSettings, err := settings.BuildAndVerifySettings(ctx, viper.GetViper())
 	if err != nil {
 		return err
 	}
 
 	// Determine if gRPC is being used.
 
-	grpcUrl := viper.GetString(option.GrpcUrl.Arg)
+	grpcURL := viper.GetString(option.GrpcURL.Arg)
 	grpcTarget := ""
 	grpcDialOptions := []grpc.DialOption{}
-	if len(grpcUrl) > 0 {
-		grpcTarget, grpcDialOptions, err = grpcurl.Parse(ctx, grpcUrl)
+	if len(grpcURL) > 0 {
+		grpcTarget, grpcDialOptions, err = grpcurl.Parse(ctx, grpcURL)
 		if err != nil {
 			return err
 		}
@@ -143,33 +153,34 @@ func RunE(_ *cobra.Command, _ []string) error {
 
 	// Create object and Serve.
 
-	httpServer := &httpserver.HttpServerImpl{
-		ApiUrlRoutePrefix:              "api",
-		EnableAll:                      viper.GetBool(option.EnableAll.Arg),
-		EnableSenzingRestAPI:           viper.GetBool(option.EnableSenzingRestApi.Arg),
-		EnableSwaggerUI:                viper.GetBool(option.EnableSwaggerUi.Arg),
-		EnableXterm:                    viper.GetBool(option.EnableXterm.Arg),
-		GrpcDialOptions:                grpcDialOptions,
-		GrpcTarget:                     grpcTarget,
-		LogLevelName:                   viper.GetString(option.LogLevel.Arg),
-		ObserverOrigin:                 viper.GetString(option.ObserverOrigin.Arg),
-		Observers:                      observers,
-		OpenApiSpecificationRest:       senzingrestservice.OpenApiSpecificationJson,
-		ReadHeaderTimeout:              60 * time.Second,
-		SenzingEngineConfigurationJson: senzingEngineConfigurationJson,
-		SenzingModuleName:              viper.GetString(option.EngineModuleName.Arg),
-		SenzingVerboseLogging:          viper.GetInt64(option.EngineLogLevel.Arg),
-		ServerAddress:                  viper.GetString(option.ServerAddress.Arg),
-		ServerPort:                     viper.GetInt(option.HttpPort.Arg),
-		SwaggerUrlRoutePrefix:          "swagger",
-		TtyOnly:                        viper.GetBool(option.TtyOnly.Arg),
-		XtermAllowedHostnames:          viper.GetStringSlice(option.XtermAllowedHostnames.Arg),
-		XtermArguments:                 viper.GetStringSlice(option.XtermArguments.Arg),
-		XtermCommand:                   viper.GetString(option.XtermCommand.Arg),
-		XtermConnectionErrorLimit:      viper.GetInt(option.XtermConnectionErrorLimit.Arg),
-		XtermKeepalivePingTimeout:      viper.GetInt(option.XtermKeepalivePingTimeout.Arg),
-		XtermMaxBufferSizeBytes:        viper.GetInt(option.XtermMaxBufferSizeBytes.Arg),
-		XtermUrlRoutePrefix:            "xterm",
+	httpServer := &httpserver.BasicHTTPServer{
+		APIUrlRoutePrefix:         "api",
+		AvoidServing:              viper.GetBool(avoidServe.Arg),
+		EnableAll:                 viper.GetBool(option.EnableAll.Arg),
+		EnableSenzingRestAPI:      viper.GetBool(option.EnableSenzingRestAPI.Arg),
+		EnableSwaggerUI:           viper.GetBool(option.EnableSwaggerUI.Arg),
+		EnableXterm:               viper.GetBool(option.EnableXterm.Arg),
+		GrpcDialOptions:           grpcDialOptions,
+		GrpcTarget:                grpcTarget,
+		LogLevelName:              viper.GetString(option.LogLevel.Arg),
+		ObserverOrigin:            viper.GetString(option.ObserverOrigin.Arg),
+		Observers:                 observers,
+		OpenAPISpecificationRest:  senzingrestservice.OpenAPISpecificationJSON,
+		ReadHeaderTimeout:         60 * time.Second,
+		SenzingSettings:           senzingSettings,
+		SenzingInstanceName:       viper.GetString(option.EngineModuleName.Arg),
+		SenzingVerboseLogging:     viper.GetInt64(option.EngineLogLevel.Arg),
+		ServerAddress:             viper.GetString(option.ServerAddress.Arg),
+		ServerPort:                viper.GetInt(option.HTTPPort.Arg),
+		SwaggerURLRoutePrefix:     "swagger",
+		TtyOnly:                   viper.GetBool(option.TtyOnly.Arg),
+		XtermAllowedHostnames:     viper.GetStringSlice(option.XtermAllowedHostnames.Arg),
+		XtermArguments:            viper.GetStringSlice(option.XtermArguments.Arg),
+		XtermCommand:              viper.GetString(option.XtermCommand.Arg),
+		XtermConnectionErrorLimit: viper.GetInt(option.XtermConnectionErrorLimit.Arg),
+		XtermKeepalivePingTimeout: viper.GetInt(option.XtermKeepalivePingTimeout.Arg),
+		XtermMaxBufferSizeBytes:   viper.GetInt(option.XtermMaxBufferSizeBytes.Arg),
+		XtermURLRoutePrefix:       "xterm",
 	}
 	return httpServer.Serve(ctx)
 }
