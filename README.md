@@ -148,42 +148,43 @@ This usage shows how to initialze a database with a Docker container.
 1. [Errors]
 1. [Examples]
 
+[Command reference]: https://hub.senzing.com/senzing-tools/senzing-tools_serve-http.html
 [Development]: docs/development.md
 [Errors]: docs/errors.md
 [Examples]: docs/examples.md
-[Go Reference Badge]: https://pkg.go.dev/badge/github.com/senzing-garage/template-go.svg
-[Go Report Card Badge]: https://goreportcard.com/badge/github.com/senzing-garage/template-go
-[Go Report Card]: https://goreportcard.com/report/github.com/senzing-garage/template-go
-[License Badge]: https://img.shields.io/badge/License-Apache2-brightgreen.svg
-[License]: https://github.com/senzing-garage/template-go/blob/main/LICENSE
-[Online documentation]: https://hub.senzing.com/senzing-tools/senzing-tools_serve-http.html
-[Package reference]: https://pkg.go.dev/github.com/senzing-garage/template-go
+[Go Reference Badge]: <https://pkg.go.dev/badge/github.com/senzing-garage/serve-http.svg>
+[Go Report Card Badge]: <https://goreportcard.com/badge/github.com/senzing-garage/serve-http>
+[Go Report Card]: <https://goreportcard.com/report/github.com/senzing-garage/serve-http>
+[License Badge]: <https://img.shields.io/badge/License-Apache2-brightgreen.svg>
+[License]: <https://github.com/senzing-garage/serve-http/blob/main/LICENSE>
+[Online documentation]: <https://hub.senzing.com/senzing-tools/senzing-tools_serve-http.html>
+[Package reference]: <https://pkg.go.dev/github.com/senzing-garage/serve-http>
 [Parameters]: #parameters
-[SENZING_TOOLS_DATABASE_URL]: https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_database_url
-[SENZING_TOOLS_ENABLE_ALL]: https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_enable_all
-[SENZING_TOOLS_ENABLE_SZCONFIGMGR]: https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_enable_szconfigmgr
-[SENZING_TOOLS_ENABLE_SZCONFIG]: https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_enable_szconfig
-[SENZING_TOOLS_ENABLE_SZDIAGNOSTIC]: https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_enable_szdiagnostic
-[SENZING_TOOLS_ENABLE_SZENGINE]: https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_enable_szengine
-[SENZING_TOOLS_ENABLE_SzPRODUCT]: https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_enable_szproduct
-[SENZING_TOOLS_ENGINE_CONFIGURATION_JSON]: https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_engine_configuration_json
-[SENZING_TOOLS_ENGINE_LOG_LEVEL]: https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_engine_log_level
-[SENZING_TOOLS_ENGINE_MODULE_NAME]: https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_engine_module_name
-[SENZING_TOOLS_GRPC_PORT]: https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_grpc_port
-[SENZING_TOOLS_LOG_LEVEL]: https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_log_level
-[Senzing Garage]: https://github.com/senzing-garage
-[Senzing Quick Start guides]: https://docs.senzing.com/quickstart/
-[Senzing]: https://senzing.com/
-[sz-sdk-go-grpc]: https://github.com/senzing/sz-sdk-go-grpc
-[sz-sdk-python-grpc]: https://github.com/senzing-garage/sz-sdk-python-grpc
-[go-test-darwin.yaml Badge]: https://github.com/senzing-garage/template-go/actions/workflows/go-test-darwin.yaml/badge.svg
-[go-test-darwin.yaml]: https://github.com/senzing-garage/template-go/actions/workflows/go-test-darwin.yaml
-[go-test-linux.yaml Badge]: https://github.com/senzing-garage/template-go/actions/workflows/go-test-linux.yaml/badge.svg
-[go-test-linux.yaml]: https://github.com/senzing-garage/template-go/actions/workflows/go-test-linux.yaml
-[go-test-windows.yaml Badge]: https://github.com/senzing-garage/template-go/actions/workflows/go-test-windows.yaml/badge.svg
-[go-test-windows.yaml]: https://github.com/senzing-garage/template-go/actions/workflows/go-test-windows.yaml
-[golangci-lint.yaml Badge]: https://github.com/senzing-garage/template-go/actions/workflows/golangci-lint.yaml/badge.svg
-[golangci-lint.yaml]: https://github.com/senzing-garage/template-go/actions/workflows/golangci-lint.yaml
-[install]: https://github.com/senzing-garage/senzing-tools#install
-[localhost:8261]: http://localhost:8261
-[senzing-tools]: https://github.com/senzing-garage/senzing-tools
+[SENZING_TOOLS_DATABASE_URL]: <https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_database_url>
+[SENZING_TOOLS_ENABLE_ALL]: <https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_enable_all>
+[SENZING_TOOLS_ENABLE_SZCONFIGMGR]: <https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_enable_szconfigmgr>
+[SENZING_TOOLS_ENABLE_SZCONFIG]: <https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_enable_szconfig>
+[SENZING_TOOLS_ENABLE_SZDIAGNOSTIC]: <https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_enable_szdiagnostic>
+[SENZING_TOOLS_ENABLE_SZENGINE]: <https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_enable_szengine>
+[SENZING_TOOLS_ENABLE_SzPRODUCT]: <https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_enable_szproduct>
+[SENZING_TOOLS_ENGINE_CONFIGURATION_JSON]: <https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_engine_configuration_json>
+[SENZING_TOOLS_ENGINE_LOG_LEVEL]: <https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_engine_log_level>
+[SENZING_TOOLS_ENGINE_MODULE_NAME]: <https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_engine_module_name>
+[SENZING_TOOLS_GRPC_PORT]: <https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_grpc_port>
+[SENZING_TOOLS_LOG_LEVEL]: <https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_tools_log_level>
+[Senzing Garage]: <https://github.com/senzing-garage>
+[Senzing Quick Start guides]: <https://docs.senzing.com/quickstart/>
+[Senzing]: <https://senzing.com/>
+[sz-sdk-go-grpc]: <https://github.com/senzing/sz-sdk-go-grpc>
+[sz-sdk-python-grpc]: <https://github.com/senzing-garage/sz-sdk-python-grpc>
+[go-test-darwin.yaml Badge]: <https://github.com/senzing-garage/serve-http/actions/workflows/go-test-darwin.yaml/badge.svg>
+[go-test-darwin.yaml]: <https://github.com/senzing-garage/serve-http/actions/workflows/go-test-darwin.yaml>
+[go-test-linux.yaml Badge]: <https://github.com/senzing-garage/serve-http/actions/workflows/go-test-linux.yaml/badge.svg>
+[go-test-linux.yaml]: <https://github.com/senzing-garage/serve-http/actions/workflows/go-test-linux.yaml>
+[go-test-windows.yaml Badge]: <https://github.com/senzing-garage/serve-http/actions/workflows/go-test-windows.yaml/badge.svg>
+[go-test-windows.yaml]: <https://github.com/senzing-garage/serve-http/actions/workflows/go-test-windows.yaml>
+[golangci-lint.yaml Badge]: <https://github.com/senzing-garage/serve-http/actions/workflows/golangci-lint.yaml/badge.svg>
+[golangci-lint.yaml]: <https://github.com/senzing-garage/serve-http/actions/workflows/golangci-lint.yaml>
+[install]: <https://github.com/senzing-garage/senzing-tools#install>
+[localhost:8261]: <http://localhost:8261>
+[senzing-tools]: <https://github.com/senzing-garage/senzing-tools>

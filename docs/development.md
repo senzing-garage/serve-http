@@ -100,21 +100,21 @@ Since the Senzing library is a prerequisite, it must be installed first.
     1. Linux
 
         ```console
-        ${GIT_REPOSITORY_DIR}/target/linux-amd64/template-go
+        ${GIT_REPOSITORY_DIR}/target/linux-amd64/serve-http
 
         ```
 
     1. macOS
 
         ```console
-        ${GIT_REPOSITORY_DIR}/target/darwin-amd64/template-go
+        ${GIT_REPOSITORY_DIR}/target/darwin-amd64/serve-http
 
         ```
 
     1. Windows
 
         ```console
-        ${GIT_REPOSITORY_DIR}/target/windows-amd64/template-go
+        ${GIT_REPOSITORY_DIR}/target/windows-amd64/serve-http
 
         ```
 
@@ -126,7 +126,6 @@ Since the Senzing library is a prerequisite, it must be installed first.
     make clean
 
     ```
-
 
 ## Run
 
@@ -336,10 +335,10 @@ Example:
 [clone-repository]: https://github.com/senzing-garage/knowledge-base/blob/main/HOWTO/clone-repository.md
 [docker]: https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/docker.md
 [git]: https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/git.md
-[Go Reference Badge]: https://pkg.go.dev/badge/github.com/senzing-garage/template-go.svg
-[Go Reference]: https://pkg.go.dev/github.com/senzing-garage/template-go
+[Go Reference Badge]: https://pkg.go.dev/badge/github.com/senzing-garage/serve-http.svg
+[Go Reference]: https://pkg.go.dev/github.com/senzing-garage/serve-http
 [go]: https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/go.md
 [How to Install Senzing for Go Development]: https://github.com/senzing-garage/knowledge-base/blob/main/HOWTO/install-senzing-for-go-development.md
-[localhost:6060]: http://localhost:6060/pkg/github.com/senzing-garage/template-go/
+[localhost:6060]: http://localhost:6060/pkg/github.com/senzing-garage/serve-http/
 [make]: https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/make.md
 [testcoverage.yaml]: ../.github/coverage/testcoverage.yaml

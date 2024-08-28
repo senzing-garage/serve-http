@@ -47,7 +47,7 @@ RUN make build
 # Copy binaries to /output.
 
 RUN mkdir -p /output \
- && cp -R ${GOPATH}/src/serve-http/target/*  /output/
+      && cp -R ${GOPATH}/src/serve-http/target/*  /output/
 
 # -----------------------------------------------------------------------------
 # Stage: final
@@ -55,7 +55,7 @@ RUN mkdir -p /output \
 
 FROM ${IMAGE_FINAL} AS final
 ENV REFRESHED_AT=2024-07-01
-LABEL Name="senzing/template-go" \
+LABEL Name="senzing/serve-http" \
       Maintainer="support@senzing.com" \
       Version="0.0.1"
 HEALTHCHECK CMD apt list --installed | grep senzingapi-runtime
