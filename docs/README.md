@@ -1,5 +1,8 @@
 # serve-http
 
-Placeholder for [GitHub pages](https://pages.github.com/).
+Placeholder for [GitHub pages].
 
-See [https://hub.senzing.com/serve-http](https://hub.senzing.com/serve-http).
+See [GitHub page].
+
+[GitHub page]: https://garage.senzing.com/serve-http
+[GitHub pages]: https://pages.github.com/

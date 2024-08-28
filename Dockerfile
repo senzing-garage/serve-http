@@ -58,7 +58,7 @@ ENV REFRESHED_AT=2024-07-01
 LABEL Name="senzing/serve-http" \
       Maintainer="support@senzing.com" \
       Version="0.0.1"
-HEALTHCHECK CMD apt list --installed | grep senzingapi-runtime
+HEALTHCHECK CMD ["/app/healthcheck.sh"]
 USER root
 
 # Install packages via apt-get.
