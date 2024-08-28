@@ -127,7 +127,7 @@ Since the Senzing library is a prerequisite, it must be installed first.
 
         ```
 
-1. Open a web browser at [localhost:8261](http://localhost:8261).
+1. Open a web browser at [localhost:8261].
 
 1. Clean up.
    Example:
@@ -304,3 +304,4 @@ Example:
 [localhost:6060]: http://localhost:6060/pkg/github.com/senzing-garage/serve-http/
 [make]: https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/make.md
 [testcoverage.yaml]: ../.github/coverage/testcoverage.yaml
+[localhost:8261]: http://localhost:8261
