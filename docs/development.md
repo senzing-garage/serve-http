@@ -118,6 +118,17 @@ Since the Senzing library is a prerequisite, it must be installed first.
 
         ```
 
+    1. Run without a build.
+    Example:
+
+        ```console
+        cd ${GIT_REPOSITORY_DIR}
+        make run
+
+        ```
+
+1. Open a web browser at [localhost:8261](http://localhost:8261).
+
 1. Clean up.
    Example:
 
@@ -126,55 +137,6 @@ Since the Senzing library is a prerequisite, it must be installed first.
     make clean
 
     ```
-
-## Run
-
-1. Run without a build.
-   Example:
-
-     ```console
-     cd ${GIT_REPOSITORY_DIR}
-     make run
-
-     ```
-
-1. Open a web browser at [localhost:8261](http://localhost:8261).
-
-## Build
-
-1. Build the binaries.
-   Example:
-
-     ```console
-     cd ${GIT_REPOSITORY_DIR}
-     make build
-
-     ```
-
-1. The binaries will be found in ${GIT_REPOSITORY_DIR}/target.
-   Example:
-
-    ```console
-    tree ${GIT_REPOSITORY_DIR}/target
-
-    ```
-
-1. Run the binary.
-   Example:
-
-    ```console
-    ${GIT_REPOSITORY_DIR}/target/linux/serve-http
-
-    ```
-
-1. Clean up.
-   Example:
-
-     ```console
-     cd ${GIT_REPOSITORY_DIR}
-     make clean
-
-     ```
 
 ## Test
 
