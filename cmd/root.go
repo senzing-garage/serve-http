@@ -27,10 +27,10 @@ const (
 	Use   string = "serve-http"
 	Long  string = `
 An HTTP server supporting the following services:
-	- Senzing API server
-	- Swagger UI
-	- Xterm
-	`
+    - Senzing API server
+    - Swagger UI
+    - Xterm
+    `
 )
 
 var avoidServe = option.ContextVariable{
@@ -74,37 +74,17 @@ var ContextVariablesForMultiPlatform = []option.ContextVariable{
 var ContextVariables = append(ContextVariablesForMultiPlatform, ContextVariablesForOsArch...)
 
 // ----------------------------------------------------------------------------
-// Private functions
+// Command
 // ----------------------------------------------------------------------------
 
-// Since init() is always invoked, define command line parameters.
-func init() {
-	cmdhelper.Init(RootCmd, ContextVariables)
-}
-
-// --- Networking -------------------------------------------------------------
-
-func getOutboundIP() net.IP {
-	conn, err := net.Dial("udp", "8.8.8.8:80")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer func() {
-		if err := conn.Close(); err != nil {
-			panic(err)
-		}
-	}()
-	localAddr := conn.LocalAddr().(*net.UDPAddr)
-	return localAddr.IP
-}
-
-func getDefaultAllowedHostnames() []string {
-	result := []string{"localhost"}
-	outboundIPAddress := getOutboundIP().String()
-	if len(outboundIPAddress) > 0 {
-		result = append(result, outboundIPAddress)
-	}
-	return result
+// RootCmd represents the command.
+var RootCmd = &cobra.Command{
+	Use:     Use,
+	Short:   Short,
+	Long:    Long,
+	PreRun:  PreRun,
+	RunE:    RunE,
+	Version: Version(),
 }
 
 // ----------------------------------------------------------------------------
@@ -191,15 +171,35 @@ func Version() string {
 }
 
 // ----------------------------------------------------------------------------
-// Command
+// Private functions
 // ----------------------------------------------------------------------------
 
-// RootCmd represents the command.
-var RootCmd = &cobra.Command{
-	Use:     Use,
-	Short:   Short,
-	Long:    Long,
-	PreRun:  PreRun,
-	RunE:    RunE,
-	Version: Version(),
+// Since init() is always invoked, define command line parameters.
+func init() {
+	cmdhelper.Init(RootCmd, ContextVariables)
+}
+
+// --- Networking -------------------------------------------------------------
+
+func getOutboundIP() net.IP {
+	conn, err := net.Dial("udp", "8.8.8.8:80")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer func() {
+		if err := conn.Close(); err != nil {
+			panic(err)
+		}
+	}()
+	localAddr := conn.LocalAddr().(*net.UDPAddr)
+	return localAddr.IP
+}
+
+func getDefaultAllowedHostnames() []string {
+	result := []string{"localhost"}
+	outboundIPAddress := getOutboundIP().String()
+	if len(outboundIPAddress) > 0 {
+		result = append(result, outboundIPAddress)
+	}
+	return result
 }
