@@ -2,7 +2,7 @@
 # Stages
 # -----------------------------------------------------------------------------
 
-ARG IMAGE_BUILDER=golang:1.22.3-bullseye
+ARG IMAGE_BUILDER=golang:1.22.4-bullseye
 ARG IMAGE_FINAL=senzing/senzingapi-runtime-staging:latest
 
 # -----------------------------------------------------------------------------
@@ -47,7 +47,7 @@ RUN make build
 # Copy binaries to /output.
 
 RUN mkdir -p /output \
-      && cp -R ${GOPATH}/src/serve-http/target/*  /output/
+ && cp -R ${GOPATH}/src/serve-http/target/*  /output/
 
 # -----------------------------------------------------------------------------
 # Stage: final
