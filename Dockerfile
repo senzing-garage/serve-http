@@ -69,7 +69,7 @@ COPY ./rootfs /
 
 # Copy files from prior stage.
 
-COPY --from=builder /output/linux-amd64/serve-http /app/serve-http
+COPY --from=builder /output/linux/serve-http /app/serve-http
 
 # Run as non-root container
 
