@@ -2,7 +2,7 @@
 # Stages
 # -----------------------------------------------------------------------------
 
-ARG IMAGE_BUILDER=golang:1.23.4-bookworm
+ARG IMAGE_BUILDER=golang:1.24.1-bookworm
 ARG IMAGE_FINAL=senzing/senzingsdk-runtime-beta:latest
 
 # -----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ COPY ./rootfs /
 
 # Copy files from prior stage.
 
-COPY --from=builder /output/linux-amd64/serve-http /app/serve-http
+COPY --from=builder /output/linux/serve-http /app/serve-http
 
 # Run as non-root container
 
