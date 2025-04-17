@@ -10,7 +10,7 @@ require (
 	github.com/senzing-garage/go-grpcing v0.2.1
 	github.com/senzing-garage/go-helpers v0.6.10
 	github.com/senzing-garage/go-observing v0.3.3
-	github.com/senzing-garage/go-rest-api-service v0.10.4
+	github.com/senzing-garage/go-rest-api-service v0.10.5-0.20250417150243-211a131def49
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.20.1
 	github.com/stretchr/testify v1.10.0
