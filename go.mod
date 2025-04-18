@@ -10,7 +10,7 @@ require (
 	github.com/senzing-garage/go-grpcing v0.2.1
 	github.com/senzing-garage/go-helpers v0.6.10
 	github.com/senzing-garage/go-observing v0.3.3
-	github.com/senzing-garage/go-rest-api-service v0.10.5-0.20250417150243-211a131def49
+	github.com/senzing-garage/go-rest-api-service v0.10.5
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.20.1
 	github.com/stretchr/testify v1.10.0
@@ -39,7 +39,7 @@ require (
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
-	github.com/ogen-go/ogen v1.10.1 // indirect
+	github.com/ogen-go/ogen v1.11.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/prometheus/client_golang v1.22.0 // indirect
@@ -51,9 +51,9 @@ require (
 	github.com/segmentio/asm v1.2.0 // indirect
 	github.com/senzing-garage/go-logging v1.5.1 // indirect
 	github.com/senzing-garage/go-messaging v1.5.2 // indirect
-	github.com/senzing-garage/go-sdk-abstract-factory v0.9.7 // indirect
+	github.com/senzing-garage/go-sdk-abstract-factory v0.9.8 // indirect
 	github.com/senzing-garage/sz-sdk-go v0.15.1 // indirect
-	github.com/senzing-garage/sz-sdk-go-core v0.9.2 // indirect
+	github.com/senzing-garage/sz-sdk-go-core v0.9.3 // indirect
 	github.com/senzing-garage/sz-sdk-go-grpc v0.9.4 // indirect
 	github.com/senzing-garage/sz-sdk-go-mock v0.8.6 // indirect
 	github.com/senzing-garage/sz-sdk-json-type-definition v0.2.7 // indirect
