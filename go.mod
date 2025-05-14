@@ -10,7 +10,7 @@ require (
 	github.com/senzing-garage/go-grpcing v0.2.2
 	github.com/senzing-garage/go-helpers v0.6.11
 	github.com/senzing-garage/go-observing v0.3.4
-	github.com/senzing-garage/go-rest-api-service v0.10.5
+	github.com/senzing-garage/go-rest-api-service v0.10.6
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.20.1
 	github.com/stretchr/testify v1.10.0
@@ -39,7 +39,7 @@ require (
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
-	github.com/ogen-go/ogen v1.11.0 // indirect
+	github.com/ogen-go/ogen v1.12.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/prometheus/client_golang v1.22.0 // indirect
@@ -49,15 +49,15 @@ require (
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sagikazarmark/locafero v0.9.0 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
-	github.com/senzing-garage/go-logging v1.5.1 // indirect
+	github.com/senzing-garage/go-logging v1.5.2 // indirect
 	github.com/senzing-garage/go-messaging v1.5.3 // indirect
-	github.com/senzing-garage/go-sdk-abstract-factory v0.9.8 // indirect
-	github.com/senzing-garage/sz-sdk-go v0.15.1 // indirect
-	github.com/senzing-garage/sz-sdk-go-core v0.9.3 // indirect
-	github.com/senzing-garage/sz-sdk-go-grpc v0.9.4 // indirect
+	github.com/senzing-garage/go-sdk-abstract-factory v0.9.9 // indirect
+	github.com/senzing-garage/sz-sdk-go v0.15.3 // indirect
+	github.com/senzing-garage/sz-sdk-go-core v0.9.4 // indirect
+	github.com/senzing-garage/sz-sdk-go-grpc v0.9.5 // indirect
 	github.com/senzing-garage/sz-sdk-go-mock v0.8.6 // indirect
-	github.com/senzing-garage/sz-sdk-json-type-definition v0.2.7 // indirect
-	github.com/senzing-garage/sz-sdk-proto v0.8.2 // indirect
+	github.com/senzing-garage/sz-sdk-json-type-definition v0.2.8 // indirect
+	github.com/senzing-garage/sz-sdk-proto v0.8.3 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.14.0 // indirect
@@ -70,12 +70,12 @@ require (
 	go.opentelemetry.io/otel/trace v1.35.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
-	golang.org/x/exp v0.0.0-20250408133849-7e4ce0ab07d0 // indirect
-	golang.org/x/net v0.39.0 // indirect
-	golang.org/x/sync v0.13.0 // indirect
-	golang.org/x/sys v0.32.0 // indirect
-	golang.org/x/text v0.24.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250422160041-2d3770c4ea7f // indirect
+	golang.org/x/exp v0.0.0-20250506013437-ce4c2cf36ca6 // indirect
+	golang.org/x/net v0.40.0 // indirect
+	golang.org/x/sync v0.14.0 // indirect
+	golang.org/x/sys v0.33.0 // indirect
+	golang.org/x/text v0.25.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250512202823-5a2f75b736a9 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
