@@ -18,6 +18,7 @@ import (
 // ----------------------------------------------------------------------------
 
 func TestBasicHTTPServer_Serve(test *testing.T) {
+	test.Parallel()
 	ctx := test.Context()
 	httpServer := getTestObject(ctx, test)
 	err := httpServer.Serve(ctx)

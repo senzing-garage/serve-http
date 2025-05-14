@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"html/template"
 	"io/fs"
-	"log"
 	"net/http"
 	"os"
 	"time"
@@ -343,7 +342,7 @@ func (httpServer *BasicHTTPServer) getSenzingAPIMux(ctx context.Context) *senzin
 
 	srv, err := senzingrestapi.NewServer(service, httpServer.ServerOptions...)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	return srv
