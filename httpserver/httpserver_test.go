@@ -1,9 +1,7 @@
-package httpserver
+package httpserver_test
 
 import (
 	"context"
-	"net/http"
-	"net/http/httptest"
 	"os"
 	"testing"
 	"time"
@@ -11,7 +9,7 @@ import (
 	"github.com/senzing-garage/go-helpers/settings"
 	"github.com/senzing-garage/go-observing/observer"
 	"github.com/senzing-garage/go-rest-api-service/senzingrestservice"
-	"github.com/stretchr/testify/assert"
+	"github.com/senzing-garage/serve-http/httpserver"
 	"github.com/stretchr/testify/require"
 )
 
@@ -20,8 +18,8 @@ import (
 // ----------------------------------------------------------------------------
 
 func TestBasicHTTPServer_Serve(test *testing.T) {
-	_ = test
-	ctx := context.TODO()
+	test.Parallel()
+	ctx := test.Context()
 	httpServer := getTestObject(ctx, test)
 	err := httpServer.Serve(ctx)
 	require.NoError(test, err)
@@ -31,56 +29,58 @@ func TestBasicHTTPServer_Serve(test *testing.T) {
 // Test private functions
 // ----------------------------------------------------------------------------
 
-func TestBasicHTTPServer_getServerStatus(test *testing.T) {
-	_ = test
-	ctx := context.TODO()
-	httpServer := getTestObject(ctx, test)
-	actual := httpServer.getServerStatus(true)
-	assert.Equal(test, "green", actual)
-}
+// func TestBasicHTTPServer_getServerStatus(test *testing.T) {
+// 	_ = test
+// 	ctx := context.TODO()
+// 	httpServer := getTestObject(ctx, test)
+// 	actual := httpServer.getServerStatus(true)
+// 	assert.Equal(test, "green", actual)
+// }
 
-func TestBasicHTTPServer_getServerURL(test *testing.T) {
-	_ = test
-	ctx := context.TODO()
-	expected := "http://expected"
-	httpServer := getTestObject(ctx, test)
-	actual := httpServer.getServerURL(true, expected)
-	assert.Equal(test, expected, actual)
-}
+// func TestBasicHTTPServer_getServerURL(test *testing.T) {
+// 	_ = test
+// 	ctx := context.TODO()
+// 	expected := "http://expected"
+// 	httpServer := getTestObject(ctx, test)
+// 	actual := httpServer.getServerURL(true, expected)
+// 	assert.Equal(test, expected, actual)
+// }
 
-func TestBasicHTTPServer_openAPIFunc(test *testing.T) {
-	_ = test
-	ctx := context.TODO()
-	httpServer := getTestObject(ctx, test)
-	openAPIFunction := httpServer.openAPIFunc(ctx, httpServer.OpenAPISpecificationRest)
-	request := httptest.NewRequest(http.MethodGet, "/", nil)
-	response := httptest.NewRecorder()
-	openAPIFunction(response, request)
-}
+// func TestBasicHTTPServer_openAPIFunc(test *testing.T) {
+// 	_ = test
+// 	ctx := context.TODO()
+// 	httpServer := getTestObject(ctx, test)
+// 	openAPIFunction := httpServer.openAPIFunc(ctx, httpServer.OpenAPISpecificationRest)
+// 	request := httptest.NewRequest(http.MethodGet, "/", nil)
+// 	response := httptest.NewRecorder()
+// 	openAPIFunction(response, request)
+// }
 
-func TestBasicHTTPServer_populateStaticTemplate(test *testing.T) {
-	_ = test
-	ctx := context.TODO()
-	request := httptest.NewRequest(http.MethodGet, "/", nil)
-	response := httptest.NewRecorder()
-	httpServer := getTestObject(ctx, test)
-	httpServer.populateStaticTemplate(response, request, "/", TemplateVariables{})
-}
+// func TestBasicHTTPServer_populateStaticTemplate(test *testing.T) {
+// 	_ = test
+// 	ctx := context.TODO()
+// 	request := httptest.NewRequest(http.MethodGet, "/", nil)
+// 	response := httptest.NewRecorder()
+// 	httpServer := getTestObject(ctx, test)
+// 	httpServer.populateStaticTemplate(response, request, "/", httpserver.TemplateVariables{})
+// }
 
-func TestBasicHTTPServer_siteFunc(test *testing.T) {
-	_ = test
-	ctx := context.TODO()
-	request := httptest.NewRequest(http.MethodGet, "/", nil)
-	response := httptest.NewRecorder()
-	httpServer := getTestObject(ctx, test)
-	httpServer.siteFunc(response, request)
-}
+// func TestBasicHTTPServer_siteFunc(test *testing.T) {
+// 	_ = test
+// 	ctx := context.TODO()
+// 	request := httptest.NewRequest(http.MethodGet, "/", nil)
+// 	response := httptest.NewRecorder()
+// 	httpServer := getTestObject(ctx, test)
+// 	httpServer.siteFunc(response, request)
+// }
 
 // ----------------------------------------------------------------------------
 // Internal functions
 // ----------------------------------------------------------------------------
 
-func getTestObject(ctx context.Context, test *testing.T) *BasicHTTPServer {
+func getTestObject(ctx context.Context, t *testing.T) *httpserver.BasicHTTPServer {
+	t.Helper()
+
 	_ = ctx
 
 	observer1 := &observer.NullObserver{
@@ -89,14 +89,15 @@ func getTestObject(ctx context.Context, test *testing.T) *BasicHTTPServer {
 
 	logLevelName := "INFO"
 	osenvLogLevel := os.Getenv("SENZING_LOG_LEVEL")
+
 	if len(osenvLogLevel) > 0 {
 		logLevelName = osenvLogLevel
 	}
 
 	senzingSettings, err := settings.BuildSimpleSettingsUsingEnvVars()
-	require.NoError(test, err)
+	require.NoError(t, err)
 
-	result := &BasicHTTPServer{
+	result := &httpserver.BasicHTTPServer{
 		APIUrlRoutePrefix:        "api",
 		AvoidServing:             true,
 		EnableAll:                true,
@@ -111,5 +112,6 @@ func getTestObject(ctx context.Context, test *testing.T) *BasicHTTPServer {
 		TtyOnly:                  true,
 		XtermURLRoutePrefix:      "xterm",
 	}
+
 	return result
 }

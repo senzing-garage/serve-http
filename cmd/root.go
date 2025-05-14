@@ -4,7 +4,6 @@ package cmd
 
 import (
 	"context"
-	"log"
 	"net"
 	"os"
 	"time"
@@ -14,6 +13,7 @@ import (
 	"github.com/senzing-garage/go-cmdhelping/option/optiontype"
 	"github.com/senzing-garage/go-cmdhelping/settings"
 	"github.com/senzing-garage/go-grpcing/grpcurl"
+	"github.com/senzing-garage/go-helpers/wraperror"
 	"github.com/senzing-garage/go-observing/observer"
 	"github.com/senzing-garage/go-rest-api-service/senzingrestservice"
 	"github.com/senzing-garage/serve-http/httpserver"
@@ -73,6 +73,8 @@ var ContextVariablesForMultiPlatform = []option.ContextVariable{
 
 var ContextVariables = append(ContextVariablesForMultiPlatform, ContextVariablesForOsArch...)
 
+const ReadHeaderTimeout = 60
+
 // ----------------------------------------------------------------------------
 // Command
 // ----------------------------------------------------------------------------
@@ -100,19 +102,20 @@ func Execute() {
 	}
 }
 
-// Used in construction of cobra.Command
+// Used in construction of cobra.Command.
 func PreRun(cobraCommand *cobra.Command, args []string) {
 	cmdhelper.PreRun(cobraCommand, args, Use, ContextVariables)
 }
 
-// Used in construction of cobra.Command
+// Used in construction of cobra.Command.
 func RunE(_ *cobra.Command, _ []string) error {
 	var err error
+
 	ctx := context.Background()
 
 	senzingSettings, err := settings.BuildAndVerifySettings(ctx, viper.GetViper())
 	if err != nil {
-		return err
+		return wraperror.Errorf(err, "cmd.RunE.BuildAndVerifySettings error: %w", err)
 	}
 
 	// Determine if gRPC is being used.
@@ -120,10 +123,11 @@ func RunE(_ *cobra.Command, _ []string) error {
 	grpcURL := viper.GetString(option.GrpcURL.Arg)
 	grpcTarget := ""
 	grpcDialOptions := []grpc.DialOption{}
+
 	if len(grpcURL) > 0 {
 		grpcTarget, grpcDialOptions, err = grpcurl.Parse(ctx, grpcURL)
 		if err != nil {
-			return err
+			return wraperror.Errorf(err, "cme.RunE error: %w", err)
 		}
 	}
 
@@ -146,7 +150,7 @@ func RunE(_ *cobra.Command, _ []string) error {
 		ObserverOrigin:            viper.GetString(option.ObserverOrigin.Arg),
 		Observers:                 observers,
 		OpenAPISpecificationRest:  senzingrestservice.OpenAPISpecificationJSON,
-		ReadHeaderTimeout:         60 * time.Second,
+		ReadHeaderTimeout:         ReadHeaderTimeout * time.Second,
 		SenzingSettings:           senzingSettings,
 		SenzingInstanceName:       viper.GetString(option.EngineInstanceName.Arg),
 		SenzingVerboseLogging:     viper.GetInt64(option.EngineLogLevel.Arg),
@@ -162,10 +166,13 @@ func RunE(_ *cobra.Command, _ []string) error {
 		XtermMaxBufferSizeBytes:   viper.GetInt(option.XtermMaxBufferSizeBytes.Arg),
 		XtermURLRoutePrefix:       "xterm",
 	}
-	return httpServer.Serve(ctx)
+
+	err = httpServer.Serve(ctx)
+
+	return wraperror.Errorf(err, "cmd.PreRun error: %w", err)
 }
 
-// Used in construction of cobra.Command
+// Used in construction of cobra.Command.
 func Version() string {
 	return cmdhelper.Version(githubVersion, githubIteration)
 }
@@ -182,24 +189,34 @@ func init() {
 // --- Networking -------------------------------------------------------------
 
 func getOutboundIP() net.IP {
+	var result net.IP
+
 	conn, err := net.Dial("udp", "8.8.8.8:80")
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
+
 	defer func() {
 		if err := conn.Close(); err != nil {
 			panic(err)
 		}
 	}()
-	localAddr := conn.LocalAddr().(*net.UDPAddr)
-	return localAddr.IP
+
+	localAddr, isOK := conn.LocalAddr().(*net.UDPAddr)
+	if isOK {
+		result = localAddr.IP
+	}
+
+	return result
 }
 
 func getDefaultAllowedHostnames() []string {
 	result := []string{"localhost"}
 	outboundIPAddress := getOutboundIP().String()
+
 	if len(outboundIPAddress) > 0 {
 		result = append(result, outboundIPAddress)
 	}
+
 	return result
 }
