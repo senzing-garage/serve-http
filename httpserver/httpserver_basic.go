@@ -132,7 +132,7 @@ func (httpServer *BasicHTTPServer) Serve(ctx context.Context) error {
 		err = server.ListenAndServe()
 	}
 
-	return wraperror.Errorf(err, "httpserver.Serve error: %w", err)
+	return wraperror.Errorf(err, wraperror.NoMessage)
 }
 
 // ----------------------------------------------------------------------------

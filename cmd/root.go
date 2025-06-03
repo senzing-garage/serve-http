@@ -115,7 +115,7 @@ func RunE(_ *cobra.Command, _ []string) error {
 
 	senzingSettings, err := settings.BuildAndVerifySettings(ctx, viper.GetViper())
 	if err != nil {
-		return wraperror.Errorf(err, "cmd.RunE.BuildAndVerifySettings error: %w", err)
+		return wraperror.Errorf(err, "BuildAndVerifySettings")
 	}
 
 	// Determine if gRPC is being used.
@@ -127,7 +127,7 @@ func RunE(_ *cobra.Command, _ []string) error {
 	if len(grpcURL) > 0 {
 		grpcTarget, grpcDialOptions, err = grpcurl.Parse(ctx, grpcURL)
 		if err != nil {
-			return wraperror.Errorf(err, "cme.RunE error: %w", err)
+			return wraperror.Errorf(err, "grpcurl.Parse: %s", grpcURL)
 		}
 	}
 
@@ -169,7 +169,7 @@ func RunE(_ *cobra.Command, _ []string) error {
 
 	err = httpServer.Serve(ctx)
 
-	return wraperror.Errorf(err, "cmd.PreRun error: %w", err)
+	return wraperror.Errorf(err, wraperror.NoMessage)
 }
 
 // Used in construction of cobra.Command.
