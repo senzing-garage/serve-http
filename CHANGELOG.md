@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
-## [0.3.9] - 2025-07-21
+## [0.3.9] - 2025-07-22
 
 ### Changed in 0.3.9
 
