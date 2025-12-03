@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 
 `serve-http` is an HTTP server command in the senzing-tools suite that provides:
+
 - Senzing REST API server
 - Swagger UI
 - Xterm terminal interface
@@ -48,6 +49,7 @@ make fix
 ## Running the Server
 
 Requires Senzing C library installed at `/opt/senzing/er/lib`. Set `LD_LIBRARY_PATH`:
+
 ```bash
 export LD_LIBRARY_PATH=/opt/senzing/er/lib
 ```
@@ -69,6 +71,7 @@ The server runs on port 8261 by default. Use `--enable-all` to enable all servic
 ### Key Components
 
 **BasicHTTPServer** (`httpserver/httpserver_basic.go`): Core server struct that configures and runs the HTTP server. The `Serve()` method sets up routes via `http.ServeMux`:
+
 - `/api/` - Senzing REST API (via go-rest-api-service)
 - `/swagger/` - Swagger UI
 - `/xterm/` - Terminal interface (via cloudshell)
@@ -80,6 +83,7 @@ The server runs on port 8261 by default. Use `--enable-all` to enable all servic
 ### Dependencies
 
 Key Senzing packages:
+
 - `go-rest-api-service` - REST API implementation
 - `go-cmdhelping` - CLI helpers and option management
 - `go-grpcing` - gRPC URL parsing for remote Senzing connections
