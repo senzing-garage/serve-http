@@ -94,48 +94,48 @@ Since the Senzing library is a prerequisite, it must be installed first.
 
 ## Run
 
-1. Run program.
-   Examples:
-   1. Linux
+1.  Run program.
+    Examples:
+    1. Linux
 
-      ```console
-      ${GIT_REPOSITORY_DIR}/target/linux-amd64/serve-http
+       ```console
+       ${GIT_REPOSITORY_DIR}/target/linux-amd64/serve-http
 
-      ```
+       ```
 
-   1. macOS
+    1. macOS
 
-      ```console
-      ${GIT_REPOSITORY_DIR}/target/darwin-amd64/serve-http
+       ```console
+       ${GIT_REPOSITORY_DIR}/target/darwin-amd64/serve-http
 
-      ```
+       ```
 
     1. Windows
 
-      ```console
-      ${GIT_REPOSITORY_DIR}/target/windows-amd64/serve-http
+    ```console
+    ${GIT_REPOSITORY_DIR}/target/windows-amd64/serve-http
 
-      ```
+    ```
 
-    1. Run without a build.
+    1.  Run without a build.
+        Example:
+
+            ```console
+            cd ${GIT_REPOSITORY_DIR}
+            make run
+
+            ```
+
+1.  Open a web browser at [localhost:8261].
+
+1.  Clean up.
     Example:
 
-        ```console
-        cd ${GIT_REPOSITORY_DIR}
-        make run
+    ```console
+    cd ${GIT_REPOSITORY_DIR}
+    make clean
 
-        ```
-
-1. Open a web browser at [localhost:8261].
-
-1. Clean up.
-   Example:
-
-   ```console
-   cd ${GIT_REPOSITORY_DIR}
-   make clean
-
-   ```
+    ```
 
 ## Test
 
