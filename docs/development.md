@@ -16,7 +16,7 @@ These are "one-time tasks" which may already have been completed.
    1. [docker]
    1. [go]
 
-## Install Senzing C library 
+## Install Senzing C library
 
 Since the Senzing library is a prerequisite, it must be installed first.
 
@@ -110,32 +110,32 @@ Since the Senzing library is a prerequisite, it must be installed first.
 
       ```
 
-    1. Windows
+   1. Windows
+
+   ```console
+   ${GIT_REPOSITORY_DIR}/target/windows-amd64/serve-http
+
+   ```
+
+   1. Run without a build.
+      Example:
 
       ```console
-      ${GIT_REPOSITORY_DIR}/target/windows-amd64/serve-http
+      cd ${GIT_REPOSITORY_DIR}
+      make run
 
       ```
 
-    1. Run without a build.
-       Example:
+1. Open a web browser at [localhost:8261].
 
-       ```console
-       cd ${GIT_REPOSITORY_DIR}
-       make run
+1. Clean up.
+   Example:
 
-       ```
+   ```console
+   cd ${GIT_REPOSITORY_DIR}
+   make clean
 
-1.  Open a web browser at [localhost:8261].
-
-1.  Clean up.
-    Example:
-
-    ```console
-    cd ${GIT_REPOSITORY_DIR}
-    make clean
-
-    ```
+   ```
 
 ## Test
 
