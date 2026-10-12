@@ -6,11 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `serve-http` is an HTTP server command in the senzing-tools suite that provides:
 
-- Senzing REST API server
-- Swagger UI
 - Xterm terminal interface
+- Static console site
 
-It connects to a Senzing database (local SQLite/PostgreSQL or remote via gRPC) to provide entity resolution services over HTTP.
+The Senzing REST API and Swagger UI were removed in 0.4.0, along with the archived `go-rest-api-service` dependency.
+The Senzing settings (from `SENZING_TOOLS_DATABASE_URL` or `SENZING_TOOLS_CORE_SETTINGS`) are passed to the Xterm shell as `SENZING_ENGINE_CONFIGURATION_JSON`.
 
 ## Build and Development Commands
 
@@ -52,7 +52,7 @@ make fix
 
 ## Running the Server
 
-Requires Senzing C library installed at `/opt/senzing/er/lib`. Set `LD_LIBRARY_PATH`:
+The binary does not link the Senzing C library. Senzing tools run from the Xterm shell need it at `/opt/senzing/er/lib`, so set `LD_LIBRARY_PATH`:
 
 ```bash
 export LD_LIBRARY_PATH=/opt/senzing/er/lib
@@ -63,8 +63,7 @@ The server runs on port 8261 by default. Use `--enable-all` to enable all servic
 Configuration via environment variables (prefixed `SENZING_TOOLS_`) or command-line flags:
 
 - `SENZING_TOOLS_DATABASE_URL` - Database connection (e.g., `sqlite3://na:na@/tmp/sqlite/G2C.db`)
-- `SENZING_TOOLS_GRPC_URL` - Connect to remote Senzing via gRPC instead of local database
-- `SENZING_TOOLS_ENABLE_ALL` - Enable all services (API, Swagger, Xterm)
+- `SENZING_TOOLS_ENABLE_ALL` - Enable all services (Xterm)
 - `SENZING_TOOLS_HTTP_PORT` - Server port (default 8261)
 
 ## Architecture
@@ -83,25 +82,18 @@ Configuration via environment variables (prefixed `SENZING_TOOLS_`) or command-l
 
 **BasicHTTPServer** (`httpserver/httpserver_basic.go`): Core server struct that configures and runs the HTTP server. The `Serve()` method sets up routes via `http.ServeMux`:
 
-- `/api/` - Senzing REST API (via go-rest-api-service)
-- `/swagger/` - Swagger UI
 - `/xterm/` - Terminal interface (via cloudshell)
 - `/site/` - Static site templates
 - `/` - Static root files
 
-**Command Configuration** (`cmd/root.go`): Uses `go-cmdhelping` for CLI options. The `RunE` function builds a `BasicHTTPServer` from Viper config and calls `Serve()`. Supports two modes:
-
-- Local mode: Connects directly to database via `SENZING_TOOLS_DATABASE_URL`
-- gRPC mode: Connects to remote Senzing server via `SENZING_TOOLS_GRPC_URL`
+**Command Configuration** (`cmd/root.go`): Uses `go-cmdhelping` for CLI options. The `RunE` function builds a `BasicHTTPServer` from Viper config and calls `Serve()`. Senzing settings are built from `SENZING_TOOLS_DATABASE_URL` or `SENZING_TOOLS_CORE_SETTINGS`.
 
 ### Dependencies
 
 Key Senzing packages:
 
-- `go-rest-api-service` - REST API implementation
 - `go-cmdhelping` - CLI helpers and option management
-- `go-grpcing` - gRPC URL parsing for remote Senzing connections
-- `go-observing` - Observer pattern implementation
+- `go-helpers` - Settings building and error wrapping
 
 ### Test Data
 

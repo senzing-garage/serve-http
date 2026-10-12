@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/senzing-garage/serve-http/cmd"
+	"github.com/stretchr/testify/assert"
 )
 
 // ----------------------------------------------------------------------------
@@ -84,10 +85,32 @@ func Test_Execute(test *testing.T) {
 // 	require.NoError(test, err)
 // }
 
-// func Test_RunE_badGrpcURL(test *testing.T) {
-// 	test.Setenv("SENZING_TOOLS_AVOID_SERVING", "true")
-// 	test.Setenv("SENZING_TOOLS_GRPC_URL", "grpc://bad")
+func Test_ContextVariables(test *testing.T) {
+	test.Parallel()
 
-// 	err := cmd.RunE(cmd.RootCmd, []string{})
-// 	require.NoError(test, err)
-// }
+	testCases := []struct {
+		arg      string
+		expected bool
+	}{
+		{arg: "enable-senzing-rest-api", expected: false},
+		{arg: "enable-swagger-ui", expected: false},
+		{arg: "grpc-url", expected: false},
+		{arg: "enable-xterm", expected: true},
+	}
+
+	for _, testCase := range testCases {
+		test.Run(testCase.arg, func(test *testing.T) {
+			test.Parallel()
+
+			actual := false
+
+			for _, contextVariable := range cmd.ContextVariables {
+				if contextVariable.Arg == testCase.arg {
+					actual = true
+				}
+			}
+
+			assert.Equal(test, testCase.expected, actual)
+		})
+	}
+}

@@ -12,14 +12,10 @@ import (
 	"github.com/senzing-garage/go-cmdhelping/option"
 	"github.com/senzing-garage/go-cmdhelping/option/optiontype"
 	"github.com/senzing-garage/go-cmdhelping/settings"
-	"github.com/senzing-garage/go-grpcing/grpcurl"
 	"github.com/senzing-garage/go-helpers/wraperror"
-	"github.com/senzing-garage/go-observing/observer"
-	"github.com/senzing-garage/go-rest-api-service/senzingrestservice"
 	"github.com/senzing-garage/serve-http/httpserver"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"google.golang.org/grpc"
 )
 
 const (
@@ -27,8 +23,6 @@ const (
 	Use   string = "serve-http"
 	Long  string = `
 An HTTP server supporting the following services:
-    - Senzing API server
-    - Swagger UI
     - Xterm
     `
 )
@@ -53,10 +47,7 @@ var ContextVariablesForMultiPlatform = []option.ContextVariable{
 	option.CoreSettings,
 	option.DatabaseURL,
 	option.EnableAll,
-	option.EnableSenzingRestAPI,
-	option.EnableSwaggerUI,
 	option.EnableXterm,
-	option.GrpcURL,
 	option.HTTPPort,
 	option.LogLevel,
 	option.ObserverOrigin,
@@ -118,45 +109,16 @@ func RunE(_ *cobra.Command, _ []string) error {
 		return wraperror.Errorf(err, "BuildAndVerifySettings")
 	}
 
-	// Determine if gRPC is being used.
-
-	grpcURL := viper.GetString(option.GrpcURL.Arg)
-	grpcTarget := ""
-	grpcDialOptions := []grpc.DialOption{}
-
-	if len(grpcURL) > 0 {
-		grpcTarget, grpcDialOptions, err = grpcurl.Parse(ctx, grpcURL)
-		if err != nil {
-			return wraperror.Errorf(err, "grpcurl.Parse: %s", grpcURL)
-		}
-	}
-
-	// Build observers.
-
-	observers := []observer.Observer{}
-
 	// Create object and Serve.
 
 	httpServer := &httpserver.BasicHTTPServer{
-		APIUrlRoutePrefix:         "api",
 		AvoidServing:              viper.GetBool(avoidServe.Arg),
 		EnableAll:                 viper.GetBool(option.EnableAll.Arg),
-		EnableSenzingRestAPI:      viper.GetBool(option.EnableSenzingRestAPI.Arg),
-		EnableSwaggerUI:           viper.GetBool(option.EnableSwaggerUI.Arg),
 		EnableXterm:               viper.GetBool(option.EnableXterm.Arg),
-		GrpcDialOptions:           grpcDialOptions,
-		GrpcTarget:                grpcTarget,
-		LogLevelName:              viper.GetString(option.LogLevel.Arg),
-		ObserverOrigin:            viper.GetString(option.ObserverOrigin.Arg),
-		Observers:                 observers,
-		OpenAPISpecificationRest:  senzingrestservice.OpenAPISpecificationJSON,
 		ReadHeaderTimeout:         ReadHeaderTimeout * time.Second,
 		SenzingSettings:           senzingSettings,
-		SenzingInstanceName:       viper.GetString(option.CoreInstanceName.Arg),
-		SenzingVerboseLogging:     viper.GetInt64(option.CoreLogLevel.Arg),
 		ServerAddress:             viper.GetString(option.ServerAddress.Arg),
 		ServerPort:                viper.GetInt(option.HTTPPort.Arg),
-		SwaggerURLRoutePrefix:     "swagger",
 		TtyOnly:                   viper.GetBool(option.TtyOnly.Arg),
 		XtermAllowedHostnames:     viper.GetStringSlice(option.XtermAllowedHostnames.Arg),
 		XtermArguments:            viper.GetStringSlice(option.XtermArguments.Arg),

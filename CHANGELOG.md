@@ -7,6 +7,22 @@ This project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-12
+
+### Changed in 0.4.0
+
+- Update to Go 1.27.1
+- Sync repository setup files with [template-go `v0.5.0`](https://github.com/senzing-garage/template-go/tree/v0.5.0)
+- Update dependencies
+  - github.com/senzing-garage/go-cmdhelping v0.4.0
+  - github.com/senzing-garage/go-helpers v0.7.0
+
+### Removed in 0.4.0
+
+- Senzing REST API (`/api`), because `github.com/senzing-garage/go-rest-api-service` is deprecated and archived
+- Swagger UI (`/swagger`), which only served the Senzing REST API specification
+- Command-line options `--enable-senzing-rest-api`, `--enable-swagger-ui` and `--grpc-url`
+
 ## [0.3.11] - 2026-01-09
 
 ### Changed in 0.3.11

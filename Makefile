@@ -4,6 +4,10 @@
 
 include makefiles/osdetect.mk
 
+# Tool versions, shared across OS-specific makefiles.
+
+include makefiles/versions.mk
+
 # -----------------------------------------------------------------------------
 # Variables
 # -----------------------------------------------------------------------------
@@ -78,6 +82,7 @@ dependencies-for-development: dependencies-for-development-osarch-specific
 	@go install golang.org/x/tools/cmd/godoc@latest
 	@go install golang.org/x/vuln/cmd/govulncheck@latest
 	@go install mvdan.cc/gofumpt@latest
+	@docker-compose pull 2>/dev/null || true
 	@sudo npm install -g cspell@latest
 
 
@@ -114,6 +119,27 @@ $(PLATFORMS):
 .PHONY: build
 build: build-osarch-specific
 
+
+.PHONY: build-all $(PLATFORMS)
+build-all: $(PLATFORMS)
+	@mv $(TARGET_DIRECTORY)/windows-amd64/$(PROGRAM_NAME) $(TARGET_DIRECTORY)/windows-amd64/$(PROGRAM_NAME).exe
+	@mv $(TARGET_DIRECTORY)/windows-arm64/$(PROGRAM_NAME) $(TARGET_DIRECTORY)/windows-arm64/$(PROGRAM_NAME).exe
+
+
+.PHONY: build-scratch
+build-scratch:
+	@GOOS=linux \
+	GOARCH=amd64 \
+	CGO_ENABLED=0 \
+	go build \
+		-a \
+		-installsuffix cgo \
+		-ldflags "-s -w" \
+		-o $(GO_PACKAGE_NAME)
+	@mkdir -p $(TARGET_DIRECTORY)/scratch || true
+	@mv $(GO_PACKAGE_NAME) $(TARGET_DIRECTORY)/scratch
+
+
 .PHONY: docker-build
 docker-build: docker-build-osarch-specific
 
@@ -140,6 +166,10 @@ run: run-osarch-specific
 
 .PHONY: test
 test: test-osarch-specific
+
+
+.PHONY: test-verbose
+test-verbose: test-verbose-osarch-specific
 
 
 .PHONY: docker-test
