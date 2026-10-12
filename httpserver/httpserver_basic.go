@@ -1,8 +1,6 @@
 package httpserver
 
 import (
-	"bufio"
-	"bytes"
 	"context"
 	"embed"
 	"fmt"
@@ -13,13 +11,8 @@ import (
 	"time"
 
 	"github.com/docktermj/cloudshell/xtermservice"
-	"github.com/flowchartsman/swaggerui"
 	"github.com/pkg/browser"
 	"github.com/senzing-garage/go-helpers/wraperror"
-	"github.com/senzing-garage/go-observing/observer"
-	"github.com/senzing-garage/go-rest-api-service/senzingrestapi"
-	"github.com/senzing-garage/go-rest-api-service/senzingrestservice"
-	"google.golang.org/grpc"
 )
 
 // ----------------------------------------------------------------------------
@@ -28,26 +21,13 @@ import (
 
 // BasicHTTPServer is the default implementation of the HttpServer interface.
 type BasicHTTPServer struct {
-	APIUrlRoutePrefix         string // IMPROVE: Only works with "api"
 	AvoidServing              bool
 	EnableAll                 bool
-	EnableSenzingRestAPI      bool
-	EnableSwaggerUI           bool
 	EnableXterm               bool
-	GrpcDialOptions           []grpc.DialOption
-	GrpcTarget                string
-	LogLevelName              string
-	ObserverOrigin            string
-	Observers                 []observer.Observer
-	OpenAPISpecificationRest  []byte
 	ReadHeaderTimeout         time.Duration
 	SenzingSettings           string
-	SenzingInstanceName       string
-	SenzingVerboseLogging     int64
 	ServerAddress             string
-	ServerOptions             []senzingrestapi.ServerOption
 	ServerPort                int
-	SwaggerURLRoutePrefix     string // IMPROVE: Only works with "swagger"
 	TtyOnly                   bool
 	XtermAllowedHostnames     []string
 	XtermArguments            []string
@@ -60,14 +40,9 @@ type BasicHTTPServer struct {
 
 type TemplateVariables struct {
 	BasicHTTPServer
-	APIServerStatus string
-	APIServerURL    string
-	HTMLTitle       string
-	RequestHost     string
-	SwaggerStatus   string
-	SwaggerURL      string
-	XtermStatus     string
-	XtermURL        string
+	HTMLTitle   string
+	XtermStatus string
+	XtermURL    string
 }
 
 // ----------------------------------------------------------------------------
@@ -101,8 +76,6 @@ func (httpServer *BasicHTTPServer) Serve(ctx context.Context) error {
 
 	// Add to root Mux.
 
-	userMessages = append(userMessages, httpServer.addAPIToMux(ctx, rootMux)...)
-	userMessages = append(userMessages, httpServer.addSwaggerToMux(ctx, rootMux)...)
 	userMessages = append(userMessages, httpServer.addXtermToMux(ctx, rootMux)...)
 	userMessages = append(userMessages, httpServer.addSiteToMux(ctx, rootMux)...)
 	userMessages = append(userMessages, httpServer.addStaticToMux(ctx, rootMux)...)
@@ -139,25 +112,6 @@ func (httpServer *BasicHTTPServer) Serve(ctx context.Context) error {
 // Private methods
 // ----------------------------------------------------------------------------
 
-func (httpServer *BasicHTTPServer) addAPIToMux(
-	ctx context.Context,
-	rootMux *http.ServeMux,
-) []string {
-	var result []string
-
-	if httpServer.EnableAll || httpServer.EnableSenzingRestAPI {
-		senzingAPIMux := httpServer.getSenzingAPIMux(ctx)
-		rootMux.Handle(fmt.Sprintf("/%s/", httpServer.APIUrlRoutePrefix), http.StripPrefix("/api", senzingAPIMux))
-		result = append(result, fmt.Sprintf(
-			"Serving Senzing REST API at http://localhost:%d/%s",
-			httpServer.ServerPort,
-			httpServer.APIUrlRoutePrefix,
-		))
-	}
-
-	return result
-}
-
 func (httpServer *BasicHTTPServer) addSiteToMux(
 	ctx context.Context,
 	rootMux *http.ServeMux,
@@ -186,29 +140,6 @@ func (httpServer *BasicHTTPServer) addStaticToMux(
 	}
 
 	rootMux.Handle("/", http.StripPrefix("/", http.FileServer(http.FS(rootDir))))
-
-	return result
-}
-
-func (httpServer *BasicHTTPServer) addSwaggerToMux(
-	ctx context.Context,
-	rootMux *http.ServeMux,
-) []string {
-	var result []string
-
-	if httpServer.EnableAll || httpServer.EnableSwaggerUI {
-		swaggerUIMux := httpServer.getSwaggerUIMux(ctx)
-		rootMux.Handle(
-			fmt.Sprintf("/%s/", httpServer.SwaggerURLRoutePrefix),
-			http.StripPrefix("/swagger", swaggerUIMux),
-		)
-
-		result = append(result, fmt.Sprintf(
-			"Serving SwaggerUI at        http://localhost:%d/%s\n",
-			httpServer.ServerPort,
-			httpServer.SwaggerURLRoutePrefix,
-		))
-	}
 
 	return result
 }
@@ -263,37 +194,6 @@ func (httpServer *BasicHTTPServer) getServerURL(active bool, url string) string 
 	return result
 }
 
-func (httpServer *BasicHTTPServer) openAPIFunc(ctx context.Context, openAPISpecification []byte) http.HandlerFunc {
-	_ = ctx
-	_ = openAPISpecification
-
-	return func(writer http.ResponseWriter, request *http.Request) {
-		var bytesBuffer bytes.Buffer
-
-		bufioWriter := bufio.NewWriter(&bytesBuffer)
-
-		openAPISpecificationTemplate, err := template.New("OpenApiTemplate").
-			Parse(string(httpServer.OpenAPISpecificationRest))
-		if err != nil {
-			panic(err)
-		}
-
-		templateVariables := TemplateVariables{
-			RequestHost: request.Host,
-		}
-
-		err = openAPISpecificationTemplate.Execute(bufioWriter, templateVariables)
-		if err != nil {
-			panic(err)
-		}
-
-		_, err = writer.Write(bytesBuffer.Bytes())
-		if err != nil {
-			panic(err)
-		}
-	}
-}
-
 func (httpServer *BasicHTTPServer) populateStaticTemplate(
 	responseWriter http.ResponseWriter,
 	request *http.Request,
@@ -326,39 +226,6 @@ func (httpServer *BasicHTTPServer) populateStaticTemplate(
 
 // --- http.ServeMux ----------------------------------------------------------
 
-func (httpServer *BasicHTTPServer) getSenzingAPIMux(ctx context.Context) *senzingrestapi.Server {
-	_ = ctx
-	service := &senzingrestservice.BasicSenzingRestService{
-		GrpcDialOptions:          httpServer.GrpcDialOptions,
-		GrpcTarget:               httpServer.GrpcTarget,
-		LogLevelName:             httpServer.LogLevelName,
-		ObserverOrigin:           httpServer.ObserverOrigin,
-		Observers:                httpServer.Observers,
-		Settings:                 httpServer.SenzingSettings,
-		SenzingInstanceName:      httpServer.SenzingInstanceName,
-		SenzingVerboseLogging:    httpServer.SenzingVerboseLogging,
-		URLRoutePrefix:           httpServer.APIUrlRoutePrefix,
-		OpenAPISpecificationSpec: httpServer.OpenAPISpecificationRest,
-	}
-
-	srv, err := senzingrestapi.NewServer(service, httpServer.ServerOptions...)
-	if err != nil {
-		panic(err)
-	}
-
-	return srv
-}
-
-func (httpServer *BasicHTTPServer) getSwaggerUIMux(ctx context.Context) *http.ServeMux {
-	swaggerMux := swaggerui.Handler([]byte{}) // OpenAPI specification handled by openApiFunc()
-	swaggerFunc := swaggerMux.ServeHTTP
-	submux := http.NewServeMux()
-	submux.HandleFunc("/", swaggerFunc)
-	submux.HandleFunc("/swagger_spec", httpServer.openAPIFunc(ctx, httpServer.OpenAPISpecificationRest))
-
-	return submux
-}
-
 func (httpServer *BasicHTTPServer) getXtermMux(ctx context.Context) *http.ServeMux {
 	xtermService := &xtermservice.XtermServiceImpl{
 		AllowedHostnames:     httpServer.XtermAllowedHostnames,
@@ -379,18 +246,8 @@ func (httpServer *BasicHTTPServer) siteFunc(writer http.ResponseWriter, request 
 	templateVariables := TemplateVariables{
 		BasicHTTPServer: *httpServer,
 		HTMLTitle:       "Senzing Tools",
-		APIServerURL: httpServer.getServerURL(
-			httpServer.EnableSenzingRestAPI,
-			fmt.Sprintf("http://%s/api", request.Host),
-		),
-		APIServerStatus: httpServer.getServerStatus(httpServer.EnableSenzingRestAPI),
-		SwaggerURL: httpServer.getServerURL(
-			httpServer.EnableSwaggerUI,
-			fmt.Sprintf("http://%s/swagger", request.Host),
-		),
-		SwaggerStatus: httpServer.getServerStatus(httpServer.EnableSwaggerUI),
-		XtermURL:      httpServer.getServerURL(httpServer.EnableXterm, fmt.Sprintf("http://%s/xterm", request.Host)),
-		XtermStatus:   httpServer.getServerStatus(httpServer.EnableXterm),
+		XtermURL:        httpServer.getServerURL(httpServer.EnableXterm, fmt.Sprintf("http://%s/xterm", request.Host)),
+		XtermStatus:     httpServer.getServerStatus(httpServer.EnableXterm),
 	}
 
 	writer.Header().Set("Content-Type", "text/html")
