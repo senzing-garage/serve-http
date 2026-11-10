@@ -7,6 +7,17 @@ This project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-11-10
+
+### Changed in 0.4.1
+
+- Update dependencies
+  - github.com/senzing-garage/go-helpers v0.8.0
+
+### Fixed in 0.4.1
+
+- Settings verification no longer requires `cfgVariant.json` in `CONFIGPATH`, which Senzing SDK 4.5.0 no longer ships in `er/etc`
+
 ## [0.4.0] - 2026-10-12
 
 ### Changed in 0.4.0
